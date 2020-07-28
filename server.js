@@ -10,10 +10,10 @@ var server = mqtt.connect('mqtt://localhost', {
     , clientId: 'Server'
     , keepalive: 0 // seconds, 0 is the default, can be any positive number
     , username: 'matteo'
-    , password: new Buffer('collina') // passwords are buffers
+    , password: new Buffer.from('collina') // passwords are buffers
     , will: {
         topic: 'Server/status'
-        , payload: new Buffer('dead') // payloads are buffers
+        , payload: new Buffer.from('dead') // payloads are buffers
     }
 });
 
