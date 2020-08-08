@@ -36,6 +36,12 @@
   <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
 
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./stylesheets/Style.css">
+
 </head>
 
 <body>
@@ -51,7 +57,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">HappyHome</a>
+      <a class="navbar-brand" href="/" style="font-weight: 900; font-family: 'Roboto', sans-serif;"><span class="happy">Happy</span><span class="home">Home</span></a>
     </div>
     <!-- /.navbar-header -->
 
@@ -156,7 +162,7 @@
         <ul class="dropdown-menu dropdown-user">
           <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
           </li>
-          <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+          <li><a href="#" onclick="openSettings()"><i class="fa fa-gear fa-fw"></i> Settings</a>
           </li>
           <li class="divider"></li>
           <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -175,42 +181,42 @@
             <div class="input-group custom-search-form">
               <input type="text" class="form-control" placeholder="Search...">
                                 <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                  <i class="fa fa-search"></i>
-                                </button>
-                            </span>
+                                  <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                  </button>
+                                </span>
             </div>
             <!-- /input-group -->
           </li>
           <li>
-            <a href="javascript:;" onclick="getWgTemp();" ><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+            <a href="javascript:;" onclick="getWgTemp();" class="custom-sidebar-link"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
           </li>
           <li>
-            <a href="#"><i class="fa fa-home fa-fw"></i>Planul casei<span class="fa arrow"></span></a>
+            <a href="#" class="custom-sidebar-link"><i class="fa fa-home fa-fw"></i>Planul casei<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
-                <a href="#">Parter</a>
+                <a href="#" class="custom-sidebar-link">Parter</a>
               </li>
               <li>
-                <a href="#">Etaj</a>
+                <a href="#" class="custom-sidebar-link">Etaj</a>
               </li>
             </ul>
             <!-- /.nav-second-level -->
           </li>
           <li>
-            <a href="javascript:;" onclick="getSenzori();"><i class="fa fa-sitemap fa-fw"></i>Senzori</a>
+            <a href="javascript:;" onclick="getSenzori();" class="custom-sidebar-link"><i class="fa fa-sitemap fa-fw"></i>Senzori</a>
           </li>
           <li>
-            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>Grafice<span class="fa arrow"></span></a>
+            <a href="#"><i class="fa fa-bar-chart-o fa-fw custom-sidebar-link"></i>Grafice<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
-                <a href="#">Temperatura</a>
+                <a href="#" class="custom-sidebar-link">Temperatura</a>
               </li>
             </ul>
             <!-- /.nav-second-level -->
           </li>
           <li>
-            <a href="javascript:;" onclick="getMg();"><i class="fa fa-apple fa-fw"></i>Gradina</a>
+            <a href="javascript:;" onclick="getMg();" class="custom-sidebar-link"><i class="fa fa-apple fa-fw"></i>Gradina</a>
           </li>
         </ul>
       </div>
@@ -222,7 +228,6 @@
   <div id="page-wrapper">
     <div id="widget"></div>
     <div id="chart"></div>
-
   </div>
 
 </div>

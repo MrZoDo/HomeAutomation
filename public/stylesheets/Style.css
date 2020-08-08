@@ -1,14 +1,163 @@
-body{
-background: black;
-color: white;
-}
-#widget_wrapper{
-margin-bottom: 50px;	
 
+html{
+  font-family: "Roboto", sans-serif;
 }
+
+#widget_wrapper{
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-bottom: 50px;	
+}
+
+.happy{
+  color: #337ab7;
+  transition: color 0.3s ease-in-out;
+}
+
+.home{
+  color: #202020;
+  transition: color 0.3s ease-in-out;
+}
+
+.navbar-brand:hover .happy{
+  color: #000000;
+}
+
+.navbar-brand:hover .home{
+  color: #337ab7;
+}
+
 .custom-separator {
   height: 1px;
   background-color: white;
   margin: -5px -15px 10px;
+}
 
+.custom-sidebar-link{
+  color: #337ab7;
+  transition: all 0.3s ease-in-out;
+  font-weight: 600;
+}
+
+.custom-sidebar-link:hover{
+  color: #11283c;
+}
+
+#pageContent{
+  position: relative;
+  top: 2500%;
+  left: 80%;
+  transform: translate(-80%, 2500%);
+  background-color: transparent;
+}
+
+.title-separator{
+  height: 5px;
+  background-color: #202020;
+  width: 100%;
+  border-radius: 6px;
+  opacity: 0.3;
+}
+
+.title h3{
+  font-weight: 600;
+}
+
+.form{
+  width: 50%;
+  position: relative;
+  height: 50px;
+  overflow-x: hidden;
+}
+
+.form label{
+  position: absolute;
+  text-align: left;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding-left: 10px;
+  pointer-events: none;
+  border-bottom: 1px solid currentColor;
+  font-family: 'Montserrat', sans-serif;
+  transition: all 0.3s ease;
+}
+
+.form label::after{
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  bottom: -3px;
+  transform: translateX(-150%);
+  border-bottom: 3px solid #337ab7;
+  transition: all 0.3s ease-in-out;
+}
+
+.content-name{
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  padding-left: 10px;
+  transition: all 0.3s ease;
+}
+
+.form input{
+  background: transparent;
+  border: 0;
+  color: #000000;
+  width: 100%;
+  height: 100%;
+  font-size: 17px;
+  outline: none;
+  padding: 8px;
+  padding-top: 20px;
+  transition: border-bottom 150ms ease-in;
+  order: 2;
+}
+
+.form input:focus + .label-name .content-name,
+.form input:valid + .label-name .content-name{
+  transform: translateY(-150%) translateX(-5%);
+  font-size: 10px;
+  color: #337ab7;
+}
+
+.form input:focus + .label-name::after,
+.form input:valid + .label-name::after{
+  transform: translateX(0%);
+  color: #337ab7;
+}
+
+.add-device-button-div{
+  position: absolute;
+  bottom: 0;
+  /* right: 47%; */
+  right: 0;
+}
+
+.add-device-button{
+  cursor: pointer;
+  color: #337ab7;
+  font-size: 25px;
+  border: none;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.add-device-button:hover{
+  color: #11283c;
+}
+
+.add-device-button:focus{
+  outline: none;
+}
+
+.content{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
 }

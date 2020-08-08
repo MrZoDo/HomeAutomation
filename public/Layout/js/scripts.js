@@ -56,7 +56,6 @@ function getAChart() {
 function getSenzori(){
 	$.post( "http://localhost:3000/Senzori", function( data ) {
 		$( "#widget" ).html( data);
-
 	});
 }
 
@@ -70,4 +69,8 @@ function scadTemp(){
 	$.post("http://localhost:3000/scadTemp", function (dataCT) {
 		$("#widget").html(dataCT);
 	});
+}
+
+function openSettings(){
+	$("#widget").load("./page-content/settings.html");
 }

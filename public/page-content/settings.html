@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="../stylesheets/Style.css" type="text/css"> 
+<script src="../Layout/js/addDevice.js"></script>
+
+<div class="container-fluid">
+    <div class="title">
+        <h3>Settings</h3>
+    </div>
+    <hr class="title-separator">
+    <div class="content">
+         <form id="myForm">
+             <div class="form">
+                <input type="text" spellcheck="false" autocomplete="off" id="add-device-input" class="add-device-input" data-device required>
+                <label for="add-device-input" class="label-name"><span class="content-name">Addauga device</span></label>
+                <div class="add-device-button-div">
+                    <button type="submit" class="add-device-button" id="add-device"><span>+</span></button> <!-- Se scaleaza pe telefon corect, dar mai are cateva bugg-uri -->
+                 </div>
+             </div>
+         </form>
+         <br />
+         <h4>Device-uri:</h4>
+         <ul type="bullet" id="device-list">
+             <li>
+                <a href="#" class="device-list-item">ESP Hol</a>
+            </li>
+            <li>
+                <a href="#" class="device-list-item">ESP Baie</a>
+            </li>
+            <li>
+                <a href="#" class="device-list-item">ESP Camera Fete</a>
+            </li>
+         </ul>
+    </div>
+</div>
