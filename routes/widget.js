@@ -6,6 +6,15 @@ var router = express.Router();
 
 router.get('/', function(req, res, next) {
     console.log('am primit get pe widget');
-    res.render('mirror',{});
+    //const widgetData = {
+    //    TEMP: '22°C',
+    //    // Add other data as needed
+    //};
+    //
+    //// Render the wg_temp.ejs template and send it as the response
+    //res.render('widgets/wg_temp', widgetData);
+    //res.render('wg_temp_1',{Temperatura: '25'});
+    //res.render('wg_temp_1');
+    res.render('widget',{ReadTempESP1: '10', ReadTempESP2: '20'});
 });
 module.exports = router;

@@ -26,9 +26,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Routes setup
 app.use('/', indexRouter);
-app.use('/Temp', tempRouter);
+app.use('/temp', tempRouter);
 app.use('/widget', widgetRouter);
-app.use('/Mirror', mirror_Router);
+app.use('/mirror', mirror_Router);
 
 
 // catch 404 and forward to error handler

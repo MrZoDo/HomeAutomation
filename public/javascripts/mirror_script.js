@@ -5,7 +5,7 @@
 /**Aduc datele la prima accesare iar pe urma fac refresh la fiecare 10 sec **/
 function getLastTemp(){
     //Aduc datele la prima accesare
-    $.get("http://192.168.0.109:3000/mirror", function (data) {
+    $.get("http://192.168.0.110:3000/mirror_test", function (data) {
         for (i in data) {
             x = data[i];
             //alert(x.tempID);
@@ -25,7 +25,7 @@ function getLastTemp(){
             }
         };
         var tempInterval = setInterval(function(){
-            $.get("http://192.168.0.109:3000/mirror", function (data) {
+            $.get("http://192.168.0.110:3000/mirror_test", function (data) {
                 for (i in data) {
                     x = data[i];
                     //alert(x.tempID);

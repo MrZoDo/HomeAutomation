@@ -9,18 +9,18 @@ var server = require('../server');
 
 /* GET Temps */
 router.get('/', function(req, res, next) {
-    res.send('TMP');
-
+    //res.send('TMP');
+    console.log('primit call in route');
     server.GetTemp(2).then(
         function(succesMessage){
             console.log('Am primit raspunsul din call-ul de Web : %s',succesMessage);
             X = JSON.parse(succesMessage);
             TMP = X.TEMP;
             console.log(TMP);
-           // res.sendStatus(200);
-            //res.writeHead(200, {'Content-Type': 'text/plain'});
-            //res.X.TEMP;
-
+           //res.sendStatus(200);
+           // res.writeHead(200, {'Content-Type': 'text/plain'});
+           // res.X.TEMP;
+            res.send('TMP');
         }).catch(
         function(e){
             console.log(e);

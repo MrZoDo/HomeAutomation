@@ -1,25 +1,48 @@
-$( document ).ready(function() {
-	$( "#widget" ).load('views/wg_temp.ejs' );
-});
+//$( document ).ready(function() {
+//	//$( "#widget" ).load('views/widgets/wg_temp.ejs' );
+//});
 
-/**Aduc widget-ul de temperatura si pe urma fac refresh la temperatura la fiecare 5 sec **/
+///**Aduc widget-ul de temperatura si pe urma fac refresh la temperatura la fiecare 5 sec **/
+//function getWgTemp() {
+//	$.get("http://localhost:3000/widget")
+//		.done(function(dataWG) {
+//			console.log("WgTemp call succeeded");
+//			$("#widget").text("Hello, Widget!");
+//			//$("#widget").append("<div>Test Insert</div>");
+//			//$("#widget").html(dataWG);
+//			alert('WgTemp call made');
+//		})
+//		.fail(function(jqXHR, textStatus, errorThrown) {
+//			console.error("Error loading widget:", textStatus, errorThrown);
+//			console.log("Response text:", jqXHR.responseText);
+//		})
+//		.always(function() {
+//			console.log("getWgTemp() completed");
+//		});
+//}
+
+
+
 function getWgTemp(){
-	$.post( "http://localhost:3000/Wg_Temp", function( dataWG ) {
-		$( "#widget" ).html( dataWG);
-
-			var tempInterval = setInterval(function(){
-
-				$.post( "http://localhost:3000/Temp", function( data ) {
-					if(document.getElementById('wg_temp') !== null){
-						var ResTemp = jQuery.parseJSON(data);
-						$("#varTemp" ).html( ResTemp.TEMP);
-					}else{
-						//alert('Am schimbat content-ul');
-						clearInterval(tempInterval);
-					}
-				}); //End Post din Interval
-
-			}, 5000) //End setInterval
+	alert('getWgTemp function triggered');
+	$.get( "http://localhost:3000/widget", function( dataWG ) {
+		alert('1');
+		console.log("received");
+		$( "#widget" ).html( dataWG );
+		alert('WgTemp call made');
+			//var tempInterval = setInterval(function(){
+            //
+			//	$.get( "http://localhost:3000/temp", function( data ) {
+			//		if(document.getElementById('wg_temp') !== null){
+			//			var ResTemp = jQuery.parseJSON(data);
+			//			$("#varTemp" ).html( ResTemp.TEMP);
+			//		}else{
+			//			//alert('Am schimbat content-ul');
+			//			clearInterval(tempInterval);
+			//		}
+			//	}); //End Post din Interval
+            //
+			//}, 5000) //End setInterval
 
 
 	});
@@ -71,3 +94,4 @@ function scadTemp(){
 		$("#widget").html(dataCT);
 	});
 }
+
