@@ -95,6 +95,7 @@ function LedOff(){
 
 function GetTemp(camId){
     server.publish('Temp/Cam'+camId+'/Cerere', 'GET');
+    console.log('Serverul a trimis request pentru CAM2');
     return new Promise(function(resolve, reject ){
 
         server.once('message',function(topic, message, payload) {

@@ -1,0 +1,103 @@
+<!-- Sensor Widget (Bootstrap + SB Admin 2) -->
+<div id="frm_sensorType">
+    <!-- Sensor Widget (Bootstrap 3.3.4 + SB Admin 2) -->
+    <div class="panel panel-default" id="sensor-widget">
+        <div class="panel-heading clearfix">
+            <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Sensor types</h4>
+            <button class="btn btn-success btn-xs pull-right" id="add-sensor-btn">
+                <i class="fa fa-plus"></i> Add New Sensor Type
+            </button>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover" id="sensor-table">
+                    <!--<thead>-->
+                    <!--<tr>-->
+                        <!--<th>Sensor Name</th>-->
+                    <!--</tr>-->
+                    <!--</thead>-->
+
+                    <tbody id="sensor-table-body">
+                    <!-- MongoDB entries dynamically inserted here -->
+                    <% sensors.forEach(function(sensor){ %>
+                    <tr><td><%= sensor.sensor_type %></td></tr>
+                    <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+    // Handle "Add New Sensor"
+    document.getElementById('add-sensor-btn').addEventListener('click', function() {
+        var tbody = document.getElementById('sensor-table-body');
+
+        // Create editable row
+        var tr = document.createElement('tr');
+        tr.innerHTML = '\
+<td>\
+  <div class="input-group input-group-sm">\
+    <input type="text" class="form-control" id="new-sensor-name" placeholder="Enter sensor ype">\
+    <span class="input-group-btn">\
+      <button class="btn btn-primary btn-xs" id="save-sensor-btn">Save</button>\
+      <button class="btn btn-default btn-xs" id="cancel-sensor-btn">Cancel</button>\
+    </span>\
+  </div>\
+</td>';
+
+        tbody.appendChild(tr);
+        document.getElementById('new-sensor-name').focus();
+
+        // Disable "Add" while editing
+        document.getElementById('add-sensor-btn').disabled = true;
+
+        // Save new sensor
+        document.getElementById('save-sensor-btn').addEventListener('click', function() {
+            var new_sensor_type = document.getElementById('new-sensor-name').value.trim();
+            if (!new_sensor_type) {
+                alert('Please enter a type name.');
+                return;
+            }
+
+            // Use AJAX to tell server to save it
+            $.post("http://localhost:3000/api/addSensorType", { new_sensor_type: new_sensor_type })
+                .done(function() {
+                    addSensorType(); // call to refresh
+                })
+                .fail(function(xhr) {
+                    if (xhr.status === 409) {
+                        alert("Sensor type already exists!");
+                    } else {
+                        alert("Error saving sensor type: " + xhr.statusText);
+                    }
+            });
+        });
+    });
+
+
+
+    // Cancel new entry
+    document.getElementById('cancel-sensor-btn').addEventListener('click', function() {
+        tr.remove();
+        document.getElementById('add-sensor-btn').disabled = false;
+    });
+
+
+    // Initialize
+    renderSensors();
+</script>
+
+    <!-- Dependencies -->
+    <!-- Bootstrap 3.3.4 + Font Awesome + jQuery + SB Admin 2 -->
+    <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">-->
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">-->
+    <!--<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/1.0.8/js/sb-admin-2.min.js"></script>-->
+
+    <!-- For the function that loads the form. Needed for Refresh. -->
+    <script src="../Layout/js/scripts.js"></script>
