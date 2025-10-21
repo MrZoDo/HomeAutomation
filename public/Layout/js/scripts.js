@@ -91,7 +91,6 @@ function getAChart() {
 function getSenzori(){
 	$.post( "http://localhost:3000/Senzori", function( data ) {
 		$( "#widget" ).html( data);
-
 	});
 }
 
@@ -107,3 +106,9 @@ function scadTemp(){
 	});
 }
 
+<<<<<<< HEAD
+function openSettings(){
+	$("#widget").load("./page-content/settings.html");
+}
+=======
+>>>>>>> test

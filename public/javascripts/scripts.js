@@ -62,7 +62,6 @@ function getAChart() {
 function getSenzori(){
 	$.post( "http://192.168.0.109:3000/Senzori", function( data ) {
 		$( "#widget" ).html( data);
-
 	});
 }
 

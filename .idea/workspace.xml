@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a0eb9b7d-a334-470e-9e8b-93045ab9e8f7" name="Default" comment="">
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
       <change type="DELETED" beforePath="F:\Docs\01.Documente\07.NodeJS\HomeAutomation\node_modules\.bin\leven" afterPath="" />
       <change type="DELETED" beforePath="F:\Docs\01.Documente\07.NodeJS\HomeAutomation\node_modules\.bin\leven.cmd" afterPath="" />
       <change type="DELETED" beforePath="F:\Docs\01.Documente\07.NodeJS\HomeAutomation\node_modules\.bin\leven.ps1" afterPath="" />
@@ -1005,9 +1003,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/mqtt/lib/connect/wx.js" afterPath="$PROJECT_DIR$/node_modules/mqtt/lib/connect/wx.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/mqtt/test/browser/wx.js" afterPath="$PROJECT_DIR$/node_modules/mqtt/test/browser/wx.js" />
       <change type="MOVED" beforePath="F:\Docs\01.Documente\07.NodeJS\HomeAutomation\node_modules\mongoose\lib\schematype.js" afterPath="$PROJECT_DIR$/node_modules/mongoose/lib/schemaType.js" />
-=======
-=======
->>>>>>> Stashed changes
       <change type="DELETED" beforePath="F:\Docs\01.Documente\07.NodeJS\HomeAutomation\node_modules\mongoose\lib\options\populateOptions.js" afterPath="" />
       <change type="DELETED" beforePath="F:\Docs\01.Documente\07.NodeJS\HomeAutomation\node_modules\mongoose\lib\options\schemaArrayOptions.js" afterPath="" />
       <change type="DELETED" beforePath="F:\Docs\01.Documente\07.NodeJS\HomeAutomation\node_modules\mongoose\lib\options\schemaBufferOptions.js" afterPath="" />
@@ -1016,10 +1011,7 @@
       <change type="DELETED" beforePath="F:\Docs\01.Documente\07.NodeJS\HomeAutomation\node_modules\mongoose\lib\options\schemaObjectIdOptions.js" afterPath="" />
       <change type="DELETED" beforePath="F:\Docs\01.Documente\07.NodeJS\HomeAutomation\node_modules\mongoose\lib\options\schemaStringOptions.js" afterPath="" />
       <change type="DELETED" beforePath="F:\Docs\01.Documente\07.NodeJS\HomeAutomation\node_modules\mongoose\lib\options\schemaTypeOptions.js" afterPath="" />
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+
     </list>
     <ignored path="ESP.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -1044,18 +1036,19 @@
   <component name="FileEditorManager">
     <leaf>
       <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="scripts.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/Layout/js/scripts.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.88445807" vertical-offset="410" max-vertical-offset="1411">
+              <caret line="75" column="44" selection-start-line="75" selection-start-column="44" selection-end-line="75" selection-end-column="44" />
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-            <state vertical-scroll-proportion="0.0" vertical-offset="14" max-vertical-offset="1020">
-=======
             <state vertical-scroll-proportion="0.28500825" vertical-offset="14" max-vertical-offset="1020">
->>>>>>> Stashed changes
-=======
+
             <state vertical-scroll-proportion="0.28500825" vertical-offset="14" max-vertical-offset="1020">
->>>>>>> Stashed changes
+
               <caret line="11" column="42" selection-start-line="11" selection-start-column="42" selection-end-line="11" selection-end-column="42" />
+
               <folding />
             </state>
           </provider>
@@ -1071,11 +1064,17 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="952">
+              <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
       <file leaf-file-name="index.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/index.ejs">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-42.307693" vertical-offset="3337" max-vertical-offset="4658">
               <caret line="261" column="0" selection-start-line="261" selection-start-column="0" selection-end-line="261" selection-end-column="47" />
+
               <folding />
             </state>
           </provider>
@@ -1086,6 +1085,12 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="17" max-vertical-offset="578">
               <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+      <file leaf-file-name="settings.ejs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/settings.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="255">
+              <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+
               <folding />
             </state>
           </provider>
@@ -1097,6 +1102,12 @@
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
               <caret line="17" column="75" selection-start-line="17" selection-start-column="75" selection-end-line="17" selection-end-column="75" />
               <folding />
+      <file leaf-file-name="database_connection.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/database_connection.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="425">
+              <caret line="8" column="41" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1107,17 +1118,18 @@
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
               <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1377" max-vertical-offset="2703">
+              <caret line="92" column="18" selection-start-line="92" selection-start-column="18" selection-end-line="92" selection-end-column="18" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-<<<<<<< Updated upstream
-=======
-      <file leaf-file-name="frm_sensorType.ejs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/forms/frm_sensorType.ejs">
-          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="874" max-vertical-offset="1853">
               <caret line="63" column="13" selection-start-line="63" selection-start-column="13" selection-end-line="63" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="646">
+              <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="29" />
+              <folding />
               <folding>
                 <marker date="1761072927492" expanded="true" signature="1554:1928" placeholder="..." />
                 <marker date="1761072927492" expanded="true" signature="1598:1921" placeholder="..." />
@@ -1127,12 +1139,15 @@
           </provider>
         </entry>
       </file>
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+
       <file leaf-file-name="sensorType.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/api/sensorType.js">
+      <file leaf-file-name="index_Home.ejs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/index_Home.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2040" max-vertical-offset="4505">
+              <caret line="164" column="15" selection-start-line="164" selection-start-column="15" selection-end-line="164" selection-end-column="15" />
+              <folding />
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
               <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
@@ -1143,19 +1158,25 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="Style.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/stylesheets/Style.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="427" max-vertical-offset="1632">
+              <caret line="74" column="9" selection-start-line="74" selection-start-column="9" selection-end-line="74" selection-end-column="9" />
+              <folding>
+                <marker date="1596828148597" expanded="true" signature="1031:1305" placeholder="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="scripts.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/Layout/js/scripts.js">
           <provider selected="true" editor-type-id="text-editor">
-<<<<<<< Updated upstream
             <state vertical-scroll-proportion="1.1762768" vertical-offset="0" max-vertical-offset="1921">
               <caret line="44" column="7" selection-start-line="44" selection-start-column="7" selection-end-line="44" selection-end-column="7" />
-=======
-            <state vertical-scroll-proportion="0.0" vertical-offset="361" max-vertical-offset="1921">
               <caret line="50" column="8" selection-start-line="50" selection-start-column="10" selection-end-line="50" selection-end-column="48" />
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+              <caret line="50" column="10" selection-start-line="50" selection-start-column="10" selection-end-line="50" selection-end-column="48" />
               <folding />
             </state>
           </provider>
@@ -1193,34 +1214,25 @@
         <option value="$PROJECT_DIR$/public/javascripts/widget.js" />
         <option value="$PROJECT_DIR$/models/RoomTemp_model.js" />
         <option value="$PROJECT_DIR$/routes/wg_temp.js" />
-        <option value="$PROJECT_DIR$/public/javascripts/scripts.js" />
+        <option value="$PROJECT_DIR$/views/widget.ejs" />
         <option value="$PROJECT_DIR$/public/javascripts/widget_script.js" />
         <option value="$PROJECT_DIR$/views/Mirror.js" />
         <option value="$PROJECT_DIR$/views/mirror.ejs" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/views/index_Home.ejs" />
-        <option value="$PROJECT_DIR$/views/WG_TEMP.ejs" />
-        <option value="$PROJECT_DIR$/views/Widgets/wg_temp.ejs" />
+        <option value="$PROJECT_DIR$/routes/mirror.js" />
+        <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/views/index.ejs" />
         <option value="$PROJECT_DIR$/public/javascripts/mirror_script.js" />
         <option value="$PROJECT_DIR$/routes/mirror_test.js" />
         <option value="$PROJECT_DIR$/server.js" />
-        <option value="$PROJECT_DIR$/routes/temps.js" />
-        <option value="$PROJECT_DIR$/views/widgets/wg_temp.ejs" />
-        <option value="$PROJECT_DIR$/views/wg_temp_1.ejs" />
-        <option value="$PROJECT_DIR$/views/widget.ejs" />
-        <option value="$PROJECT_DIR$/routes/mirror.js" />
+        <option value="$PROJECT_DIR$/routes/widget.js" />
         <option value="$PROJECT_DIR$/routes/index.js" />
-        <option value="$PROJECT_DIR$/views/index.ejs" />
-        <option value="$PROJECT_DIR$/routes/functions/AddReadSensorType.js" />
-        <option value="$PROJECT_DIR$/cron.js" />
-        <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/test_code.js" />
-        <option value="$PROJECT_DIR$/models/SensorType_model.js" />
-        <option value="$PROJECT_DIR$/routes/functions/addSensorType.js" />
-        <option value="$PROJECT_DIR$/routes/forms/frm_sensorType.js" />
-        <option value="$PROJECT_DIR$/routes/api/sensorType.js" />
-        <option value="$PROJECT_DIR$/views/forms/frm_sensorType.ejs" />
-        <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/lib/database_connection.js" />
+        <option value="$PROJECT_DIR$/public/javascripts/scripts.js" />
+        <option value="$PROJECT_DIR$/public/stylesheets/Style.css" />
+        <option value="$PROJECT_DIR$/bin/www" />
+        <option value="$PROJECT_DIR$/views/settings.ejs" />
+        <option value="$PROJECT_DIR$/views/index_Home.ejs" />
+        <option value="$PROJECT_DIR$/public/Layout/js/scripts.js" />
         <option value="$PROJECT_DIR$/lib/database_connection.js" />
         <option value="$PROJECT_DIR$/routes/widget.js" />
         <option value="$PROJECT_DIR$/public/Layout/js/scripts.js" />
@@ -1232,10 +1244,10 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-6" />
-    <option name="y" value="1" />
-    <option name="width" value="1932" />
-    <option name="height" value="1165" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="2064" />
+    <option name="height" value="1138" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -1260,21 +1272,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Tests" />
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="HomeAutomation">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1359,18 +1356,69 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Layout" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ESP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HomeAutomation" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ESP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HomeAutomation" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Layout" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ESP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HomeAutomation" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="lib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Temp_static" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Nachtlied" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="recentsLimit" value="5" />
     <property name="FullScreen" value="false" />
@@ -1378,7 +1426,7 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="SearchEverywhereHistoryKey" value="buffer&#9;null&#9;null" />
+    <property name="SearchEverywhereHistoryKey" value="page-wrapp&#9;null&#9;null&#10;getSen&#9;null&#9;null" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -1506,14 +1554,30 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="1" width="1932" height="1165" extended-state="0" />
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     <editor active="false" />
-=======
-=======
->>>>>>> Stashed changes
+    <frame x="-8" y="-8" width="2064" height="1138" extended-state="6" />
     <editor active="true" />
->>>>>>> Stashed changes
+    <layout>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33421752" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32949308" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24960254" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1964462" sideWeight="0.49914238" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25728154" sideWeight="0.50085765" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32561132" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32902583" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39952996" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928804" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24453281" sideWeight="0.496875" order="2" side_tool="false" content_ui="tabs" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3252662" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -1562,6 +1626,7 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/esp_emulator.js">
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
@@ -1684,14 +1749,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/esp_emu_living.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4621359" vertical-offset="0" max-vertical-offset="561">
-          <caret line="14" column="24" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/esp_emu_hol.js">
+    <entry file="file://$PROJECT_DIR$/node_modules/express/lib/utils.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.66019416" vertical-offset="51" max-vertical-offset="578">
           <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
@@ -1719,14 +1777,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bin/www">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29402515" vertical-offset="34" max-vertical-offset="1632">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/error.ejs">
+    <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="610">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1761,14 +1812,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/mirror_test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2300163" vertical-offset="97" max-vertical-offset="731">
-          <caret line="14" column="15" selection-start-line="14" selection-start-column="15" selection-end-line="14" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/mirror.js">
+    <entry file="file://$PROJECT_DIR$/node_modules/ejs/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.27732465" vertical-offset="0" max-vertical-offset="613">
           <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
@@ -1789,29 +1833,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Layout/bower_components/bootstrap/dist/js/bootstrap.min.js">
+    <entry file="file://$PROJECT_DIR$/routes/mirror.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.028571429" vertical-offset="0" max-vertical-offset="595">
-          <caret line="1" column="3" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="20" />
+        <state vertical-scroll-proportion="0.6486842" vertical-offset="0" max-vertical-offset="760">
+          <caret line="29" column="81" selection-start-line="29" selection-start-column="81" selection-end-line="29" selection-end-column="81" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/scripts.js">
+    <entry file="file://$PROJECT_DIR$/esp_emu_hol.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="1802">
-          <caret line="13" column="37" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="578">
+          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="749">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cron.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="442">
-          <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
+        <state vertical-scroll-proportion="0.09426987" vertical-offset="0" max-vertical-offset="541">
+          <caret line="3" column="25" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/publish_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21996303" vertical-offset="0" max-vertical-offset="541">
+          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/RoomTemp_model.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.036968578" vertical-offset="241" max-vertical-offset="1292">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.11612022" vertical-offset="0" max-vertical-offset="732">
+          <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
           <folding />
         </state>
       </provider>
@@ -1835,14 +1902,21 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="4076" max-vertical-offset="4658">
           <caret line="261" column="0" selection-start-line="261" selection-start-column="0" selection-end-line="261" selection-end-column="47" />
           <folding />
+
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/widget.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
-          <caret line="7" column="43" selection-start-line="7" selection-start-column="43" selection-end-line="11" selection-end-column="8" />
->>>>>>> Stashed changes
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="272">
+          <caret line="7" column="40" selection-start-line="7" selection-start-column="40" selection-end-line="7" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/mirror_script.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="935">
+          <caret line="19" column="26" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
           <folding />
         </state>
       </provider>
@@ -1861,31 +1935,59 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="583" max-vertical-offset="1292">
           <caret line="49" column="6" selection-start-line="49" selection-start-column="6" selection-end-line="49" selection-end-column="6" />
+
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.9654654" vertical-offset="459" max-vertical-offset="2244">
-          <caret line="104" column="33" selection-start-line="104" selection-start-column="33" selection-end-line="104" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
+          <caret line="8" column="41" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_code.js">
+    <entry file="file://$PROJECT_DIR$/public/Layout/dist/css/sb-admin-2.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="243" max-vertical-offset="1071">
-          <caret line="25" column="23" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.3251366" vertical-offset="0" max-vertical-offset="6103">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/index.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5424929" vertical-offset="280" max-vertical-offset="986">
+          <caret line="39" column="12" selection-start-line="39" selection-start-column="12" selection-end-line="39" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/scripts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1019" max-vertical-offset="1785">
+          <caret line="106" column="2" selection-start-line="106" selection-start-column="2" selection-end-line="106" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/Style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="427" max-vertical-offset="1632">
+          <caret line="74" column="9" selection-start-line="74" selection-start-column="9" selection-end-line="74" selection-end-column="9" />
           <folding>
-            <element signature="e#0#41#0" expanded="false" />
+            <marker date="1596828148597" expanded="true" signature="1031:1305" placeholder="{...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/www">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1666">
+          <caret line="28" column="43" selection-start-line="28" selection-start-column="43" selection-end-line="28" selection-end-column="43" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/forms/frm_sensorType.ejs">
       <provider selected="true" editor-type-id="text-editor">
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
         <state vertical-scroll-proportion="0.0" vertical-offset="874" max-vertical-offset="1853">
           <caret line="63" column="13" selection-start-line="63" selection-start-column="13" selection-end-line="63" selection-end-column="13" />
           <folding>
@@ -1900,14 +2002,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="17" max-vertical-offset="578">
           <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-=======
         <state vertical-scroll-proportion="0.0" vertical-offset="361" max-vertical-offset="1921">
           <caret line="50" column="8" selection-start-line="50" selection-start-column="10" selection-end-line="50" selection-end-column="48" />
->>>>>>> Stashed changes
-=======
-        <state vertical-scroll-proportion="0.0" vertical-offset="361" max-vertical-offset="1921">
-          <caret line="50" column="8" selection-start-line="50" selection-start-column="10" selection-end-line="50" selection-end-column="48" />
->>>>>>> Stashed changes
+
           <folding />
         </state>
       </provider>
@@ -1924,14 +2021,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/forms/frm_sensorType.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1377" max-vertical-offset="2703">
+          <caret line="92" column="18" selection-start-line="92" selection-start-column="18" selection-end-line="92" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
@@ -1964,10 +2059,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/views/index_Home.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2040" max-vertical-offset="4505">
+          <caret line="164" column="15" selection-start-line="164" selection-start-column="15" selection-end-line="164" selection-end-column="15" />
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="14" max-vertical-offset="1020">
           <caret line="11" column="42" selection-start-line="11" selection-start-column="42" selection-end-line="11" selection-end-column="42" />
+
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/settings.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="255">
+          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.63394684" vertical-offset="1249" max-vertical-offset="2227">
+          <caret line="37" column="56" selection-start-line="37" selection-start-column="56" selection-end-line="37" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="952">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1977,9 +2100,13 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
           <caret line="17" column="75" selection-start-line="17" selection-start-column="75" selection-end-line="17" selection-end-column="75" />
           <folding />
-=======
-=======
->>>>>>> Stashed changes
+
+    <entry file="file://$PROJECT_DIR$/public/Layout/js/scripts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.88445807" vertical-offset="410" max-vertical-offset="1411">
+          <caret line="75" column="44" selection-start-line="75" selection-start-column="44" selection-end-line="75" selection-end-column="44" />
+          <folding />
+
     <entry file="file://$PROJECT_DIR$/views/forms/frm_sensorType.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="874" max-vertical-offset="1853">
@@ -1989,26 +2116,19 @@
             <marker date="1761072927492" expanded="true" signature="1598:1921" placeholder="..." />
             <marker date="1761072927492" expanded="true" signature="1732:1911" placeholder="..." />
           </folding>
->>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Layout/js/scripts.js">
       <provider selected="true" editor-type-id="text-editor">
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
         <state vertical-scroll-proportion="1.1762768" vertical-offset="0" max-vertical-offset="1921">
           <caret line="44" column="7" selection-start-line="44" selection-start-column="7" selection-end-line="44" selection-end-column="7" />
           <folding />
-=======
-=======
->>>>>>> Stashed changes
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
           <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding>
             <element signature="e#0#41#0" expanded="false" />
           </folding>
->>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
