@@ -15,6 +15,6 @@ router.get('/', function(req, res, next) {
     //res.render('widgets/wg_temp', widgetData);
     //res.render('wg_temp_1',{Temperatura: '25'});
     //res.render('wg_temp_1');
-    res.render('widget',{ReadTempESP1: '10', ReadTempESP2: '20'});
+    res.render('widgets/wg_temp',{ReadTempESP1: '10', ReadTempESP2: '20'});
 });
 module.exports = router;

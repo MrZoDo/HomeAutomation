@@ -5,11 +5,11 @@ var server = require('./server');
 
 
 /** Ruleaza la fiecare minut **/
-var recordTemp = cron.schedule('* * * * *', function() {
-    saveTempToDb();
-});
+//var recordTemp = cron.schedule('* * * * *', function() {
+//    saveTempToDb();
+//});
 
-module.exports.saveTemp = recordTemp ;
+//module.exports.saveTemp = recordTemp ;
 
 /**
  * Trimit request de citire

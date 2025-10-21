@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <meta name="viewport" content="width=device-width , initial-scale=1"
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+</head>
+<body>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
+      <!-- Logo -->
+      <div class="navbar-header">
+        <a class="navbar-brand">HOME AUTOMATION</a>
+      </div>
+
+      <!-- Optiuni meniu -->
+      <div id="meniu">
+        <ul class="nav navbar-nav">
+          <li ><a href="/On">On</a></li>
+          <li ><a href="/Off">Off</a></li>
+          <li ><a href="/wg_temp">Temperatura</a></li>
+          <li ><a href="/mirror">Mirror</a></li>
+          <!--  <li ><a href="javascript:;" onclick="displayAlert();" >Widget</a></li>-->
+          <!--  <li ><a href="javascript:;" onclick="getLastTemp();" >Widget</a></li> -->
+          <!--  <li ><a href="javascript:;" onclick="getWidget();" >Widget temp</a></li> -->
+
+        </ul>
+      </div>
+
+    </div>
+  </nav>
+  <div id="widget"></div>
+  <p>Am trimis <%= title %></p>
+
+  <!-- jQuery -->
+  <script src="../javascripts/jquery.min.js"></script>
+  <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+  <script src="../javascripts/scripts.js"></script>
+</body>
+</html>

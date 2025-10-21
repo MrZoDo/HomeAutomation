@@ -8,6 +8,8 @@ var cron = require('./cron');
 var indexRouter = require('./routes/index');
 var tempRouter = require('./routes/temps');
 var widgetRouter = require('./routes/widget');
+var sensorTypeRouter = require('./routes/forms/frm_sensorType');
+var api = require('./routes/api/sensorType');
 var mirror_Router = require('./routes/mirror');
 var app = express();
 
@@ -27,7 +29,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Routes setup
 app.use('/', indexRouter);
 app.use('/temp', tempRouter);
-app.use('/widget', widgetRouter);
+app.use('/wg_temp', widgetRouter);
+app.use('/frm_sensorType', sensorTypeRouter);
+app.use('/api', api);
 app.use('/mirror', mirror_Router);
 
 
