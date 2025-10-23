@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
     console.log('Route:S-a primit call pentru form-ul de SensorType');
 
@@ -18,8 +17,6 @@ router.get('/', function(req, res, next) {
             console.error('Error loading Sensor Types:', err);
             res.status(500).json({ error: 'Failed to load sensor types' });
         });
-
-
 
 });
 

@@ -1,0 +1,119 @@
+<div id="frm_room">
+    <div class="panel panel-default" id="room-widget">
+        <div class="panel-heading clearfix">
+            <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Rooms</h4>
+            <button class="btn btn-success btn-xs pull-right" id="add-room-btn">
+                <i class="fa fa-plus"></i> Add New Room
+            </button>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover" id="room-table">
+                    <tbody id="room-table-body">
+                    <!-- MongoDB entries dynamically inserted here -->
+                    <% rooms.forEach(function(room){ %>
+                        <tr data-room="<%= room.room_name %>">
+                            <td><%= room.room_name %></td>
+                            <td class="text-right">
+                                <button class="btn btn-danger btn-xs delete-room-btn">
+                                    <i class="fa fa-trash"></i> Delete
+                                </button>
+                            </td>
+                        </tr>
+                    <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+    // Handle "Add New Room"
+    document.getElementById('add-room-btn').addEventListener('click', function() {
+        var tbody = document.getElementById('room-table-body');
+
+        // Create editable row
+        var tr = document.createElement('tr');
+        tr.innerHTML = '\
+<td>\
+  <div class="input-group input-group-sm">\
+    <input type="text" class="form-control" id="new-room-name" placeholder="Enter room name">\
+    <span class="input-group-btn">\
+      <button class="btn btn-primary btn-xs" id="save-room-btn">Save</button>\
+      <button class="btn btn-default btn-xs" id="cancel-room-btn">Cancel</button>\
+    </span>\
+  </div>\
+</td>';
+
+        tbody.appendChild(tr);
+        document.getElementById('new-room-name').focus();
+
+        // Disable "Add" while editing
+        document.getElementById('add-room-btn').disabled = true;
+
+        // Save new room
+        document.getElementById('save-room-btn').addEventListener('click', function() {
+            var new_roomName = document.getElementById('new-room-name').value.trim();
+            if (!new_roomName) {
+                alert('Please enter a room name.');
+                return;
+            }
+
+            // Use AJAX to tell server to save it
+            $.post("http://localhost:3000/api/addRoom", { new_room: new_roomName })
+                .done(function() {
+                    addRoom(); // call to refresh
+                })
+                .fail(function(xhr) {
+                    if (xhr.status === 409) {
+                        alert("Room already exists!");
+                    } else {
+                        alert("Error saving room: " + xhr.statusText);
+                    }
+            });
+        });
+    });
+
+    // Handle "Delete" button clicks
+    document.getElementById('room-table-body').addEventListener('click', function(e) {
+        if (e.target.closest('.delete-room-btn')) {
+            const tr = e.target.closest('tr');
+            const roomName = tr.getAttribute('data-room');
+
+            if (confirm(`Are you sure you want to delete "${roomName}"?`)) {
+                $.post("http://localhost:3000/api/deleteRoom", { room: roomName })
+                        .done(function() {
+                            addRoom(); // refresh the table
+                        })
+                        .fail(function(xhr) {
+                            alert("Error deleting room: " + xhr.statusText);
+                        });
+            }
+        }
+    });
+
+
+    // Cancel new entry
+    document.getElementById('cancel-room-btn').addEventListener('click', function() {
+        tr.remove();
+        document.getElementById('add-room-btn').disabled = false;
+    });
+
+
+    // Initialize
+    renderSensors();
+</script>
+
+    <!-- Dependencies -->
+    <!-- Bootstrap 3.3.4 + Font Awesome + jQuery + SB Admin 2 -->
+    <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">-->
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">-->
+    <!--<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/1.0.8/js/sb-admin-2.min.js"></script>-->
+
+    <!-- For the function that loads the form. Needed for Refresh. -->
+    <script src="../Layout/js/scripts.js"></script>

@@ -64,14 +64,14 @@
 
         // Save new sensor
         document.getElementById('save-sensor-btn').addEventListener('click', function() {
-            var new_sensor_type = document.getElementById('new-sensor-name').value.trim();
-            if (!new_sensor_type) {
+            var new_sensorType = document.getElementById('new-sensor-name').value.trim();
+            if (!new_sensorType) {
                 alert('Please enter a type name.');
                 return;
             }
 
             // Use AJAX to tell server to save it
-            $.post("http://localhost:3000/api/addSensorType", { new_sensor_type: new_sensor_type })
+            $.post("http://localhost:3000/api/addSensorType", { new_sensor_type: new_sensorType })
                 .done(function() {
                     addSensorType(); // call to refresh
                 })

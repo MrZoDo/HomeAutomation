@@ -25,18 +25,25 @@ async function loadSensorTypes() {
 
 
 // Add sensor type to database
-async function addSensorType(sensor_type) {
+async function addSensorType(sensorType) {
     console.log('Model: Request to save new Sensor Type');
     var instance = new MySensorType();
-    instance.sensor_type = sensor_type;
+    instance.sensor_type = sensorType;
     return instance.save();
 }
 
 
 // Deletes a sensorType entry from the database
-async function delSensorType(sensor_type) {
-    console.log('Model: Request to delete a Sensor Type ->', sensor_type);
-    return MySensorType.deleteOne({ sensor_type });  // { deletedCount: 1 } if successful
+async function delSensorType(sensorType) {
+    console.log('Model: Request to delete a Sensor Type ->', sensorType);
+
+    try {
+        const result = await MySensorType.deleteOne({ sensor_type: sensorType });
+        return result;  // { acknowledged: true, deletedCount: 1 } if successful
+    } catch (error) {
+        console.error('Error deleting sensor type:', error);
+        throw error;
+    }
 }
 
 

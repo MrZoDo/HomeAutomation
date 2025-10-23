@@ -62,6 +62,21 @@ function addSensorType() {
 }
 
 
+function addRoom() {
+	$.get("http://localhost:3000/frm_room")
+		.done(function(dataFRM) {
+			$("#widget").html(dataFRM);
+		})
+		.fail(function(jqXHR, textStatus, errorThrown) {
+			console.error("Error loading widget:", textStatus, errorThrown);
+			console.log("Response text:", jqXHR.responseText);
+		})
+		.always(function() {
+			console.log("addSensorType() completed");
+		});
+}
+
+
 /** Aduc chartul pentru temperatura si il populez**/
 function getAChart() {
 	$.post("http://192.168.1.102:3000/AreaTempChart", function (dataChart) {
