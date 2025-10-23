@@ -11,21 +11,7 @@ var sensorTypeSchema = new db.Schema({
 var MySensorType = db.mongoose.model('sensorType', sensorTypeSchema);
 
 
-// Add sensor type to database
-async function addSensorType(sensor_type) {
-    console.log('Model: Request to save new Sensor Type');
-    var instance = new MySensorType();
-    instance.sensor_type = sensor_type;
-    return instance.save();
-}
-
-/**
- * Loads all documents from a given Mongoose model (collection).
- * @param {mongoose.Model} model - The Mongoose model to query.
- * @param {Object} [filter={}] - Optional MongoDB query filter.
- * @param {Object} [projection={}] - Optional projection to limit returned fields.
- * @returns {Promise<Array>} - Resolves with an array of documents.
- */
+//Reads the SensorTypes entries from database
 async function loadSensorTypes() {
     try {
         //MySensorType.find({}, 'sensor_type') → gets all docs but only includes the sensor_type field
@@ -38,8 +24,24 @@ async function loadSensorTypes() {
 }
 
 
+// Add sensor type to database
+async function addSensorType(sensor_type) {
+    console.log('Model: Request to save new Sensor Type');
+    var instance = new MySensorType();
+    instance.sensor_type = sensor_type;
+    return instance.save();
+}
+
+
+// Deletes a sensorType entry from the database
+async function delSensorType(sensor_type) {
+    console.log('Model: Request to delete a Sensor Type ->', sensor_type);
+    return MySensorType.deleteOne({ sensor_type });  // { deletedCount: 1 } if successful
+}
 
 
 // Exports
-module.exports.addSensorType = addSensorType;
 module.exports.loadSensorTypes = loadSensorTypes;
+module.exports.addSensorType = addSensorType;
+module.exports.delSensorType = delSensorType;
+
