@@ -94,4 +94,94 @@ router.post('/deleteRoom', async function(req, res, next) {
         });
 });
 
+//==========================
+// Handle calls for Sensors
+//==========================
+router.post('/addSensor', async function (req, res, next) {
+    console.log('API Route: Received POST call to save a "Sensor" entry');
+
+    try {
+        const roomName = req.body.room;
+        const sensorType = req.body.sensor_type;
+
+        const se = require('../../models/Sensor_model.js');
+        const savedSensor = await se.addSensor(roomName, sensorType);
+
+        console.log('Route: Model Response -> Sensor saved successfully:', savedSensor);
+
+        // If this is a "Termostat", save a corresponding TempSensor
+        if (savedSensor.sensor_type === 'Termostat') {
+            const ts = require('../../models/TempSensor_model.js');
+            const sensorID = savedSensor.sensorID;
+
+            try {
+                const savedTempSensor = await ts.addTempSensor(sensorID, roomName, sensorType);
+                console.log('Route: Model Response -> TempSensor saved successfully:', savedTempSensor);
+            } catch (err) {
+                console.error('Error saving TempSensor:', err);
+                // If this fails, we can still respond, but mark partial success
+                return res.status(500).json({
+                    success: false,
+                    message: 'Sensor saved, but failed to save TempSensor',
+                    error: err.message,
+                });
+            }
+        }
+
+        res.json({ success: true, sensor: savedSensor });
+    } catch (err) {
+        console.error('Error saving sensor:', err);
+        // Handle specific errors, e.g., Mongoose unique constraint violation (Code 11000)
+        if (err.code === 11000) {
+            return res.status(409).send('Sensor already exists.');
+        }else {
+            res.status(500).json({ success: false, error: err.message });
+        }
+
+    }
+});
+
+router.post('/deleteSensor', async function(req, res, next) {
+    console.log('API Route: S-a primit POST call pentru stergeres unei intari de tip "Sensor" ');
+
+    try{
+        var sensorID = req.body.id;
+        var se = require('../../models/Sensor_model.js');
+        const deletedSensor = await se.delSensor(sensorID);
+        console.log(deletedSensor);
+        if (deletedSensor.deletedCount === 0){
+            console.error('No sensor was deleted');
+            res.status(404).send("Sensor not found");
+        }else{
+            console.log('Route: Model Response->Sensor deleted successfully');
+
+            // Also try to delete from TempSensor
+            try {
+                const ts = require('../../models/TempSensor_model.js');
+                const deletedTempSensor = await ts.delTempSensor(sensorID);
+                if (deletedTempSensor.deletedCount === 1){
+                    console.log('Route: Model Response -> TempSensor deleted successfully');
+                }else{
+                    console.log('Route: Model Response -> No sensor deleted from TempSensor.');
+                }
+            } catch (err) {
+                console.error('Error deleting TempSensor:', err);
+
+                return res.status(500).json({
+                    success: false,
+                    message: 'Sensor deleted, but failed to also delete from TempSensor',
+                    error: err.message,
+                });
+            }
+
+            console.log('Route: Model Response->Sensor deleted successfully');
+            res.json({ success: true, sensor: deletedSensor });
+        }
+    } catch (err) {
+        console.error('Error deleting sensor:', err);
+        res.status(500).json({ success: false, error: err.message });
+    }
+
+});
+
 module.exports = router;

@@ -10,6 +10,7 @@ var tempRouter = require('./routes/temps');
 var widgetRouter = require('./routes/widget');
 var sensorTypeRouter = require('./routes/forms/frm_sensorType');
 var roomRouter = require('./routes/forms/frm_room');
+var sensorRouter = require('./routes/forms/frm_sensors');
 var api = require('./routes/api/handleDatabaseCalls');
 var mirror_Router = require('./routes/mirror');
 var app = express();
@@ -33,6 +34,7 @@ app.use('/temp', tempRouter);
 app.use('/wg_temp', widgetRouter);
 app.use('/frm_sensorType', sensorTypeRouter);
 app.use('/frm_room', roomRouter);
+app.use('/frm_sensors', sensorRouter);
 app.use('/api', api);
 app.use('/mirror', mirror_Router);
 

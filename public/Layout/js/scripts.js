@@ -72,7 +72,22 @@ function addRoom() {
 			console.log("Response text:", jqXHR.responseText);
 		})
 		.always(function() {
-			console.log("addSensorType() completed");
+			console.log("addRoom() completed");
+		});
+}
+
+
+function addSensor() {
+	$.get("http://localhost:3000/frm_sensors")
+		.done(function(dataFRM) {
+			$("#widget").html(dataFRM);
+		})
+		.fail(function(jqXHR, textStatus, errorThrown) {
+			console.error("Error loading widget:", textStatus, errorThrown);
+			console.log("Response text:", jqXHR.responseText);
+		})
+		.always(function() {
+			console.log("addSensor() completed");
 		});
 }
 

@@ -1,0 +1,64 @@
+/** Created by Zodo on 10/28/2025. */
+
+
+//This model is used to save only the sensors that read temperature (and humidity).
+//These sensors are also saved in a collection where we have all sensors.
+var db = require('../lib/database_connection');
+var tempSensorSchema = new db.Schema({
+    sensorID :      {type: String, unique: true, required: true},  //Unique ID for each sensor
+    room :          {type: String, required: true}, //Selected from the list of defined rooms
+    sensor_type :   {type: String, required: true},  //Selected from the list of defined types
+    temp_setpoint : {type: Number, default: 20}
+})
+
+// Create a compound unique index
+tempSensorSchema.index({ room: 1, sensor_type: 1 }, { unique: true });
+
+//'tempSensor' is the name of the collection the model is for
+//Mongoose automatically looks for the plural, lowercased version of the model name. In this case the collection is actually called 'tempSensors'
+var MyTempSensor = db.mongoose.model('tempSensor', tempSensorSchema);
+MyTempSensor.ensureIndexes(); // or TempSensor.syncIndexes() for Mongoose 6+
+
+//Reads the roomSensor entries from database
+async function loadSetPoint() {
+    try {
+        //MySensorType.find({}, 'sensor_type') → gets all docs but only includes the sensor_type field
+        const docs = await MyTempSensor.find({}, 'room temp_setpoint').lean();  // lean() returns plain JS objects
+        return docs;
+    } catch (error) {
+        console.error('Error loading collection:', error);
+        throw error;
+    }
+}
+
+
+// Add temp sensor to database
+async function addTempSensor(sensorID,room,sensorType) {
+    console.log('Model: Request to save new Temp Sensor');
+    var instance = new MyTempSensor();
+    instance.sensorID = sensorID;
+    instance.room = room;
+    instance.sensor_type = sensorType;
+    return instance.save();
+}
+
+
+// Deletes a temp sensor entry from the database
+async function delTempSensor(sensorID) {
+    console.log('Model: Request to delete a Temp Sensor  ->', sensorID);
+
+    try {
+        const result = await MyTempSensor.deleteOne({ sensorID: sensorID });
+        return result;  // { acknowledged: true, deletedCount: 1 } if successful
+    } catch (error) {
+        console.error('Error deleting sensor:', error);
+        throw error;
+    }
+}
+
+
+// Exports
+module.exports.loadSetPoint = loadSetPoint;
+module.exports.addTempSensor = addTempSensor;
+module.exports.delTempSensor = delTempSensor;
+

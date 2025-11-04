@@ -1,7 +1,7 @@
 "use strict";
 var cron = require('node-cron');
 
-var server = require('./server');
+var server = require('./serverMQTT');
 
 
 /** Ruleaza la fiecare minut **/
@@ -17,5 +17,5 @@ var server = require('./server');
  **/
 function saveTempToDb() {
     console.log('Call din Cron');
-    server.SaveRoomTemp();
+    serverMQTT.SaveRoomTemp();
 }

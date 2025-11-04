@@ -4,14 +4,14 @@
 var express = require('express');
 var router = express.Router();
 
-var server = require('../server');
+var server = require('../serverMQTT');
 
 
 /* GET Temps */
 router.get('/', function(req, res, next) {
     //res.send('TMP');
     console.log('primit call in route');
-    server.GetTemp(2).then(
+    serverMQTT.GetTemp(2).then(
         function(succesMessage){
             console.log('Am primit raspunsul din call-ul de Web : %s',succesMessage);
             X = JSON.parse(succesMessage);
