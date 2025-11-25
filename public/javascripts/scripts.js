@@ -66,18 +66,6 @@ function getSenzori(){
 	});
 }
 
-function crescTemp(){
-	$.post("http://192.168.0.109:3000/crescTemp", function (dataCT) {
-		$("#widget").html(dataCT);
-	});
-}
-
-function scadTemp(){
-	$.post("http://192.168.0.109:3000/scadTemp", function (dataCT) {
-		$("#widget").html(dataCT);
-	});
-}
-
 //---------------------------------------------------
 function displayAlert(){
 	alert("Hello! I am an alert box!!");

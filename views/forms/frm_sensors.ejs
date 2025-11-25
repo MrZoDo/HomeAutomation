@@ -11,9 +11,10 @@
                 <table class="table table-bordered table-striped table-hover" id="sensor-table">
                     <thead>
                     <tr>
-                        <th>Sensor Id</th>
                         <th>Room</th>
+                        <th>Sensor Name</th>
                         <th>Sensor Type</th>
+                        <th>Sensor Id</th>
                         <th class="text-right">Actions</th>
                     </tr>
                     </thead>
@@ -21,6 +22,7 @@
                     <% sensors.forEach(function(sensor){ %>
                     <tr data-sensor="<%= sensor.sensorID %>">
                         <td><%= sensor.room %></td>
+                        <td><%= sensor.sensor_name %></td>
                         <td><%= sensor.sensor_type %></td>
                         <td><%= sensor.sensorID %></td>
                         <td class="text-right">
@@ -46,20 +48,23 @@
         var tr = document.createElement('tr');
         tr.innerHTML = `
         <td>
-        <select class="form-control input-sm" id="new-sensor-room">
-        <option value="">Select room...</option>
-        <% rooms.forEach(function(room){ %>
-        <option value="<%= room.room_name %>"><%= room.room_name %></option>
-        <% }) %>
-        </select>
+            <select class="form-control input-sm" id="new-sensor-room">
+            <option value="">Select room...</option>
+            <% rooms.forEach(function(room){ %>
+            <option value="<%= room.room_name %>"><%= room.room_name %></option>
+            <% }) %>
+            </select>
         </td>
         <td>
-        <select class="form-control input-sm" id="new-sensor-type">
-        <option value="">Select sensor type...</option>
-        <% sensorTypes.forEach(function(type){ %>
-        <option value="<%= type.sensor_type %>"><%= type.sensor_type %></option>
-        <% }) %>
-        </select>
+            <input type="text" class="form-control" id="new-sensor-name" placeholder="Enter a sensor name">
+        </td>
+        <td>
+            <select class="form-control input-sm" id="new-sensor-type">
+            <option value="">Select sensor type...</option>
+            <% sensorTypes.forEach(function(type){ %>
+            <option value="<%= type.sensor_type %>"><%= type.sensor_type %></option>
+            <% }) %>
+            </select>
         </td>
         <td class="empty-id">
         </td>
@@ -73,12 +78,13 @@
         document.getElementById('add-sensor-btn').disabled = true;
 
         const roomSelect = document.getElementById('new-sensor-room');
+        const nameInputed = document.getElementById('new-sensor-name');
         const typeSelect = document.getElementById('new-sensor-type');
         const saveBtn = document.getElementById('save-sensor-btn');
 
         // Enable Save only when both selected
         function updateSaveState() {
-            saveBtn.disabled = !(roomSelect.value && typeSelect.value);
+            saveBtn.disabled = !(roomSelect.value && typeSelect.value && nameInputed.value);
         }
         roomSelect.addEventListener('change', updateSaveState);
         typeSelect.addEventListener('change', updateSaveState);
@@ -87,10 +93,11 @@
         saveBtn.addEventListener('click', function() {
             const selectedRoom = roomSelect.value;
             const selectedType = typeSelect.value;
+            const inputedName = nameInputed.value;
 
-            if (!selectedRoom || !selectedType) return;
+            if (!selectedRoom || !selectedType || !inputedName) return;
 
-            $.post("http://localhost:3000/api/addSensor", { room: selectedRoom, sensor_type: selectedType })
+            $.post("http://localhost:3000/api/addSensor", { room: selectedRoom, sensor_name: inputedName, sensor_type: selectedType })
                     .done(function() {
                         addSensor(); // refresh
                     })

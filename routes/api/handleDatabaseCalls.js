@@ -102,10 +102,11 @@ router.post('/addSensor', async function (req, res, next) {
 
     try {
         const roomName = req.body.room;
+        const sensorName = req.body.sensor_name;
         const sensorType = req.body.sensor_type;
 
         const se = require('../../models/Sensor_model.js');
-        const savedSensor = await se.addSensor(roomName, sensorType);
+        const savedSensor = await se.addSensor(roomName, sensorName, sensorType);
 
         console.log('Route: Model Response -> Sensor saved successfully:', savedSensor);
 
@@ -115,7 +116,7 @@ router.post('/addSensor', async function (req, res, next) {
             const sensorID = savedSensor.sensorID;
 
             try {
-                const savedTempSensor = await ts.addTempSensor(sensorID, roomName, sensorType);
+                const savedTempSensor = await ts.addTempSensor(sensorID, roomName, sensorName, sensorType);
                 console.log('Route: Model Response -> TempSensor saved successfully:', savedTempSensor);
             } catch (err) {
                 console.error('Error saving TempSensor:', err);
@@ -182,6 +183,47 @@ router.post('/deleteSensor', async function(req, res, next) {
         res.status(500).json({ success: false, error: err.message });
     }
 
+});
+
+//================================
+// Handle calls for Temp Setpoint
+//================================
+router.post('/crescTemp', async function(req, res, next) {
+    console.log('API Route: Received POST call to increase temperature setpoint');
+
+    try {
+        const room = req.body.room;
+        const newSetpoint = req.body.newSetpoint;
+        const ts = require('../../models/TempSensor_model.js');
+        
+        // Update in database
+        const result = await ts.updateTempSetpoint(room, newSetpoint);
+        
+        console.log('Route: Model Response -> Temp Setpoint increased successfully:', result);
+        res.json({ success: true, newSetpoint: newSetpoint });
+    } catch (err) {
+        console.error('Error increasing temp setpoint:', err);
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+router.post('/scadTemp', async function(req, res, next) {
+    console.log('API Route: Received POST call to decrease temperature setpoint');
+
+    try {
+        const room = req.body.room;
+        const newSetpoint = req.body.newSetpoint;
+        const ts = require('../../models/TempSensor_model.js');
+        
+        // Update in database
+        const result = await ts.updateTempSetpoint(room, newSetpoint);
+        
+        console.log('Route: Model Response -> Temp Setpoint decreased successfully:', result);
+        res.json({ success: true, newSetpoint: newSetpoint });
+    } catch (err) {
+        console.error('Error decreasing temp setpoint:', err);
+        res.status(500).json({ success: false, error: err.message });
+    }
 });
 
 module.exports = router;

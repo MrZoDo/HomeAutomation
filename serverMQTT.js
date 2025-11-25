@@ -25,7 +25,12 @@ const roomCache = {}; // { roomName: { setpoint, lastTemperature } }
 async function loadRoomCache() {
     const rooms = await tempSensor.loadSetPoint();
     rooms.forEach((r) => {
-        roomCache[r.room] = { temp_setpoint: r.temp_setpoint, lastTemperature: null };
+        roomCache[r.room] = { 
+            sensor_name: r.sensor_name,
+            temp_setpoint: r.temp_setpoint, 
+            last_temperature: r.last_temperature,
+            last_humidity: r.last_humidity
+        };
     });
     console.log("✅ Room cache loaded:", roomCache);
 };
@@ -81,19 +86,25 @@ server.on('connect', function(){
 
                         if (!roomCache[room]) {
                             console.warn(`⚠️ No cache entry for ${room}, using default setpoint 22°C`);
-                            roomCache[room] = { temp_setpoint: 22, lastTemperature: temperatura };
+                            roomCache[room] = { 
+                                sensor_name: 'Unknown',
+                                temp_setpoint: 22, 
+                                last_temperature: temperatura,
+                                last_humidity: umiditatea
+                            };
                         }
 
                         // --- Update cache ---
                         roomCache[room] = roomCache[room] || {};
-                        roomCache[room].lastTemperature = temperatura;
+                        roomCache[room].last_temperature = temperatura;
+                        roomCache[room].last_humidity = umiditatea;
                         console.log(`Cache for ${room}:`, JSON.stringify(roomCache[room], null, 2));
 
                         // --- Compare and trigger TempOff if needed ---
                         if (temperatura > roomCache[room].temp_setpoint) {
                             const topicOff = `RoomTemp/TempOff/${room}`;
                             console.log( `${room}: ${temperatura}°C > ${roomCache[room].temp_setpoint}°C → sending ${topicOff}`);
-                            server.publish(${topicOff}, 'OFF');
+                            server.publish(topicOff, 'OFF');
                         }
 
                         break;
@@ -157,6 +168,7 @@ function GetTemp(camId){
 module.exports.ON = LedOn;
 module.exports.OFF = LedOff;
 module.exports.GetTemp = GetTemp;
+module.exports.roomCache = roomCache;
 module.exports.SaveRoomTemp = SaveRoomTemp;
 
 

@@ -7,8 +7,11 @@ var db = require('../lib/database_connection');
 var tempSensorSchema = new db.Schema({
     sensorID :      {type: String, unique: true, required: true},  //Unique ID for each sensor
     room :          {type: String, required: true}, //Selected from the list of defined rooms
+    sensor_name :   {type: String, required: true}, //Manually inserted
     sensor_type :   {type: String, required: true},  //Selected from the list of defined types
-    temp_setpoint : {type: Number, default: 20}
+    temp_setpoint : {type: Number, default: 20},
+    last_temperature : {type: Number, default: null}, //Last temperature reading
+    last_humidity :  {type: Number, default: null} //Last humidity reading
 })
 
 // Create a compound unique index
@@ -23,7 +26,7 @@ MyTempSensor.ensureIndexes(); // or TempSensor.syncIndexes() for Mongoose 6+
 async function loadSetPoint() {
     try {
         //MySensorType.find({}, 'sensor_type') → gets all docs but only includes the sensor_type field
-        const docs = await MyTempSensor.find({}, 'room temp_setpoint').lean();  // lean() returns plain JS objects
+        const docs = await MyTempSensor.find({}, 'room sensor_name temp_setpoint last_temperature last_humidity').lean();  // lean() returns plain JS objects
         return docs;
     } catch (error) {
         console.error('Error loading collection:', error);
@@ -33,11 +36,12 @@ async function loadSetPoint() {
 
 
 // Add temp sensor to database
-async function addTempSensor(sensorID,room,sensorType) {
+async function addTempSensor(sensorID,room,sensorName,sensorType) {
     console.log('Model: Request to save new Temp Sensor');
     var instance = new MyTempSensor();
     instance.sensorID = sensorID;
     instance.room = room;
+    instance.sensor_name = sensorName;
     instance.sensor_type = sensorType;
     return instance.save();
 }
@@ -57,8 +61,23 @@ async function delTempSensor(sensorID) {
 }
 
 
+// Updates the temp_setpoint for a room
+async function updateTempSetpoint(room, newSetpoint) {
+    console.log('Model: Request to update Temp Setpoint for room:', room, 'to:', newSetpoint);
+
+    try {
+        const result = await MyTempSensor.updateOne({ room: room }, { temp_setpoint: newSetpoint });
+        return result;  // { acknowledged: true, modifiedCount: 1 } if successful
+    } catch (error) {
+        console.error('Error updating temp setpoint:', error);
+        throw error;
+    }
+}
+
+
 // Exports
 module.exports.loadSetPoint = loadSetPoint;
 module.exports.addTempSensor = addTempSensor;
 module.exports.delTempSensor = delTempSensor;
+module.exports.updateTempSetpoint = updateTempSetpoint;
 
