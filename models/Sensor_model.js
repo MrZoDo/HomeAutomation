@@ -6,6 +6,7 @@ var db = require('../lib/database_connection');
 var sensorSchema = new db.Schema({
     sensorID :      {type: String, unique: true, required: true}, //Unique ID for each sensor
     room :          {type: String, required: true}, //Selected from the list of defined rooms
+    floor :         {type: String}, //Floor associated with the room
     sensor_name :   {type: String, required: true}, //Manually inserted
     sensor_type :   {type: String, required: true}  //Selected from the list of defined types
 
@@ -22,7 +23,7 @@ var MySensor = db.mongoose.model('sensor', sensorSchema);
 //Reads the sensor entries from database
 async function loadSensors() {
     try {
-        const docs = await MySensor.find({}, 'sensorID room sensor_name sensor_type').lean();  // lean() returns plain JS objects
+        const docs = await MySensor.find({}, 'sensorID room floor sensor_name sensor_type').lean();  // lean() returns plain JS objects
         return docs;
     } catch (error) {
         console.error('Error loading collection:', error);
@@ -31,7 +32,7 @@ async function loadSensors() {
 }
 
 // Add sensor to database
-async function addSensor(room,sensorName,sensorType) {
+async function addSensor(room,sensorName,sensorType,floor) {
     try {
         console.log('Model: Request to save new Sensor');
         var instance = new MySensor();
@@ -39,6 +40,7 @@ async function addSensor(room,sensorName,sensorType) {
         var sensorId = new db.mongoose.Types.ObjectId();
         instance.sensorID = sensorId;
         instance.room = room;
+        instance.floor = floor;
         instance.sensor_name = sensorName;
         instance.sensor_type = sensorType;
         const result = await instance.save();
@@ -62,7 +64,21 @@ async function delSensor(sensorID) {
     }
 }
 
+// Find a sensor by ID and return the room
+async function findSensorById(sensorID) {
+    console.log('Model: Request to find sensor with ID:', sensorID);
+
+    try {
+        const sensor = await MySensor.findOne({ sensorID: sensorID }, 'sensorID room floor sensor_name sensor_type').lean();
+        return sensor;  // Returns the sensor object or null if not found
+    } catch (error) {
+        console.error('Error finding sensor:', error);
+        throw error;
+    }
+}
+
 // Exports
     module.exports.loadSensors = loadSensors;
     module.exports.addSensor = addSensor;
     module.exports.delSensor = delSensor;
+    module.exports.findSensorById = findSensorById;

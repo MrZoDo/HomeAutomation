@@ -47,8 +47,8 @@ function getWgTemp() {
 //
 //};
 
-function addSensorType() {
-	$.get("http://localhost:3000/frm_sensorType")
+function addFloor() {
+	$.get("http://localhost:3000/frm_floor")
 		.done(function(dataFRM) {
 			$("#widget").html(dataFRM);
 		})
@@ -57,7 +57,7 @@ function addSensorType() {
 			console.log("Response text:", jqXHR.responseText);
 		})
 		.always(function() {
-			console.log("addSensorType() completed");
+			console.log("addFloor() completed");
 		});
 }
 
@@ -76,6 +76,20 @@ function addRoom() {
 		});
 }
 
+
+function addSensorType() {
+	$.get("http://localhost:3000/frm_sensorType")
+		.done(function(dataFRM) {
+			$("#widget").html(dataFRM);
+		})
+		.fail(function(jqXHR, textStatus, errorThrown) {
+			console.error("Error loading widget:", textStatus, errorThrown);
+			console.log("Response text:", jqXHR.responseText);
+		})
+		.always(function() {
+			console.log("addSensorType() completed");
+		});
+}
 
 function addSensor() {
 	$.get("http://localhost:3000/frm_sensors")

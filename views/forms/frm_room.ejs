@@ -9,11 +9,19 @@
         <div class="panel-body">
             <div class="table-responsive">
                 <table class="table table-bordered table-striped table-hover" id="room-table">
+                    <thead>
+                    <tr>
+                        <th>Room Name</th>
+                        <th>Floor</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                    </thead>
                     <tbody id="room-table-body">
                     <!-- MongoDB entries dynamically inserted here -->
                     <% rooms.forEach(function(room){ %>
                         <tr data-room="<%= room.room_name %>">
                             <td><%= room.room_name %></td>
+                            <td><%= room.floor_name || 'N/A' %></td>
                             <td class="text-right">
                                 <button class="btn btn-danger btn-xs delete-room-btn">
                                     <i class="fa fa-trash"></i> Delete
@@ -37,16 +45,22 @@
 
         // Create editable row
         var tr = document.createElement('tr');
-        tr.innerHTML = '\
+        tr.innerHTML = `\
 <td>\
-  <div class="input-group input-group-sm">\
-    <input type="text" class="form-control" id="new-room-name" placeholder="Enter room name">\
-    <span class="input-group-btn">\
-      <button class="btn btn-primary btn-xs" id="save-room-btn">Save</button>\
-      <button class="btn btn-default btn-xs" id="cancel-room-btn">Cancel</button>\
-    </span>\
-  </div>\
-</td>';
+  <input type="text" class="form-control input-sm" id="new-room-name" placeholder="Enter room name">\
+</td>\
+<td>\
+  <select class="form-control input-sm" id="new-room-floor">\
+    <option value="">Select floor...</option>\
+    <% floors.forEach(function(floor){ %>\
+    <option value="<%= floor.floor_name %>"><%= floor.floor_name %></option>\
+    <% }) %>\
+  </select>\
+</td>\
+<td class="text-right">\
+  <button class="btn btn-primary btn-xs" id="save-room-btn" disabled>Save</button>\
+  <button class="btn btn-default btn-xs" id="cancel-room-btn">Cancel</button>\
+</td>`;
 
         tbody.appendChild(tr);
         document.getElementById('new-room-name').focus();
@@ -54,16 +68,33 @@
         // Disable "Add" while editing
         document.getElementById('add-room-btn').disabled = true;
 
+        const nameInput = document.getElementById('new-room-name');
+        const floorSelect = document.getElementById('new-room-floor');
+        const saveBtn = document.getElementById('save-room-btn');
+
+        // Enable Save only when both fields are filled
+        function updateSaveState() {
+            saveBtn.disabled = !(nameInput.value.trim() && floorSelect.value);
+        }
+
+        nameInput.addEventListener('input', updateSaveState);
+        floorSelect.addEventListener('change', updateSaveState);
+
         // Save new room
         document.getElementById('save-room-btn').addEventListener('click', function() {
-            var new_roomName = document.getElementById('new-room-name').value.trim();
+            var new_roomName = nameInput.value.trim();
+            var new_floorName = floorSelect.value;
             if (!new_roomName) {
                 alert('Please enter a room name.');
                 return;
             }
+            if (!new_floorName) {
+                alert('Please select a floor.');
+                return;
+            }
 
             // Use AJAX to tell server to save it
-            $.post("http://localhost:3000/api/addRoom", { new_room: new_roomName })
+            $.post("http://localhost:3000/api/addRoom", { new_room: new_roomName, floor: new_floorName })
                 .done(function() {
                     addRoom(); // call to refresh
                 })
@@ -75,9 +106,15 @@
                     }
             });
         });
+
+        // Cancel new entry
+        document.getElementById('cancel-room-btn').addEventListener('click', function() {
+            tr.remove();
+            document.getElementById('add-room-btn').disabled = false;
+        });
     });
 
-    // Handle "Delete" button clicks
+    // Handle delete button clicks for existing rooms
     document.getElementById('room-table-body').addEventListener('click', function(e) {
         if (e.target.closest('.delete-room-btn')) {
             const tr = e.target.closest('tr');
@@ -96,15 +133,8 @@
     });
 
 
-    // Cancel new entry
-    document.getElementById('cancel-room-btn').addEventListener('click', function() {
-        tr.remove();
-        document.getElementById('add-room-btn').disabled = false;
-    });
-
-
     // Initialize
-    renderSensors();
+    renderRooms();
 </script>
 
     <!-- Dependencies -->

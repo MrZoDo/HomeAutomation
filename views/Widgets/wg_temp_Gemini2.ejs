@@ -179,7 +179,7 @@
                         <div class="stat-card">
                             <div class="stat-icon"><i class="fa fa-thermometer-half"></i></div>
                             <div class="stat-content">
-                                <h4>Room Temp</h4>
+                                <h4>Temp</h4>
                                 <div class="stat-value">
                                     <%= room.last_temperature !== null && room.last_temperature !== undefined ? room.last_temperature : '99' %>°C
                                 </div>
@@ -191,7 +191,7 @@
                         <div class="stat-card">
                             <div class="stat-icon"><i class="fa fa-tint"></i></div>
                             <div class="stat-content">
-                                <h4>Room Humidity</h4>
+                                <h4>Humidity</h4>
                                 <div class="stat-value">
                                     <%= room.last_humidity !== null && room.last_humidity !== undefined ? room.last_humidity : '99' %>%
                                 </div>
@@ -207,7 +207,7 @@
                                 <div style="display: flex; align-items: center;">
                                     <div class="stat-icon"><i class="fa fa-heartbeat"></i></div>
                                     <div class="stat-content">
-                                        <h4>Room temperature setpoint</h4>
+                                        <h4>Setpoint</h4>
                                         <div class="stat-value setpoint-<%= roomName %>">
                                             <%= room.temp_setpoint %>°C
                                         </div>

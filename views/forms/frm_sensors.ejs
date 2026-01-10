@@ -11,6 +11,7 @@
                 <table class="table table-bordered table-striped table-hover" id="sensor-table">
                     <thead>
                     <tr>
+                        <th>Floor</th>
                         <th>Room</th>
                         <th>Sensor Name</th>
                         <th>Sensor Type</th>
@@ -21,6 +22,7 @@
                     <tbody id="sensor-table-body">
                     <% sensors.forEach(function(sensor){ %>
                     <tr data-sensor="<%= sensor.sensorID %>">
+                        <td><%= sensor.floor || 'N/A' %></td>
                         <td><%= sensor.room %></td>
                         <td><%= sensor.sensor_name %></td>
                         <td><%= sensor.sensor_type %></td>
@@ -47,11 +49,12 @@
         // Create editable row
         var tr = document.createElement('tr');
         tr.innerHTML = `
+        <td id="new-sensor-floor-display">Select room...</td>
         <td>
             <select class="form-control input-sm" id="new-sensor-room">
             <option value="">Select room...</option>
             <% rooms.forEach(function(room){ %>
-            <option value="<%= room.room_name %>"><%= room.room_name %></option>
+            <option value="<%= room.room_name %>" data-floor="<%= room.floor_name || 'N/A' %>"><%= room.room_name %></option>
             <% }) %>
             </select>
         </td>
@@ -78,26 +81,36 @@
         document.getElementById('add-sensor-btn').disabled = true;
 
         const roomSelect = document.getElementById('new-sensor-room');
+        const floorDisplay = document.getElementById('new-sensor-floor-display');
         const nameInputed = document.getElementById('new-sensor-name');
         const typeSelect = document.getElementById('new-sensor-type');
         const saveBtn = document.getElementById('save-sensor-btn');
 
-        // Enable Save only when both selected
+        // Update floor display when room selection changes
+        roomSelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const floorName = selectedOption.getAttribute('data-floor') || 'N/A';
+            floorDisplay.textContent = floorName;
+            updateSaveState();
+        });
+
+        // Enable Save only when all fields selected
         function updateSaveState() {
             saveBtn.disabled = !(roomSelect.value && typeSelect.value && nameInputed.value);
         }
-        roomSelect.addEventListener('change', updateSaveState);
         typeSelect.addEventListener('change', updateSaveState);
+        nameInputed.addEventListener('input', updateSaveState);
 
         // Save new sensor
         saveBtn.addEventListener('click', function() {
             const selectedRoom = roomSelect.value;
             const selectedType = typeSelect.value;
             const inputedName = nameInputed.value;
+            const selectedFloor = floorDisplay.textContent;
 
             if (!selectedRoom || !selectedType || !inputedName) return;
 
-            $.post("http://localhost:3000/api/addSensor", { room: selectedRoom, sensor_name: inputedName, sensor_type: selectedType })
+            $.post("http://localhost:3000/api/addSensor", { room: selectedRoom, sensor_name: inputedName, sensor_type: selectedType, floor: selectedFloor })
                     .done(function() {
                         addSensor(); // refresh
                     })
@@ -140,10 +153,10 @@
 </script>
 
 <!-- Dependencies -->
-<!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">-->
-<!--<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">-->
-<!--<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>-->
-<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/1.0.8/js/sb-admin-2.min.js"></script>-->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/1.0.8/js/sb-admin-2.min.js"></script>
 
 <script src="../Layout/js/scripts.js"></script>

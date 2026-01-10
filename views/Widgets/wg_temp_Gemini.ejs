@@ -1,0 +1,292 @@
+<style>
+    /* Custom CSS to Modernize Bootstrap 3 Panels */
+    .widget-panel {
+        border: none;
+        border-radius: 12px; /* Softer corners */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Modern shadow */
+        transition: transform 0.2s;
+        margin-bottom: 30px;
+        overflow: hidden;
+    }
+
+    .widget-panel:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .widget-header {
+        background-color: #337ab7; /* Keep Blue Theme */
+        color: white;
+        padding: 15px 20px;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .widget-title {
+        margin: 0;
+        font-weight: 300;
+        font-size: 20px;
+    }
+
+    /* Status Indicator Logic */
+    .status-badge {
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 4px 10px;
+        border-radius: 20px;
+    }
+
+    .status-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 6px;
+    }
+
+    .is-online {
+        background-color: #2ecc71; /* Green */
+        box-shadow: 0 0 8px #2ecc71;
+    }
+
+    .is-offline {
+        background-color: #e74c3c; /* Red */
+    }
+
+    /* Body Layout */
+    .widget-body {
+        background: #fff;
+        padding: 20px;
+    }
+
+    .data-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+
+    .main-metric {
+        display: flex;
+        align-items: center;
+    }
+
+    .metric-icon {
+        color: #337ab7;
+        opacity: 0.8;
+        margin-right: 15px;
+    }
+
+    .metric-value {
+        font-size: 38px;
+        font-weight: 700;
+        color: #333;
+        line-height: 1;
+    }
+
+    .metric-label {
+        font-size: 14px;
+        color: #777;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Setpoint Controls */
+    .control-box {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        border: 1px solid #eee;
+    }
+
+    .control-actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin-top: 5px;
+    }
+
+    .btn-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+        text-decoration: none !important;
+    }
+
+    .btn-minus { background: #e9ecef; color: #337ab7; }
+    .btn-plus { background: #337ab7; color: white; }
+    
+    .btn-circle:hover { opacity: 0.8; }
+
+    .target-val {
+        font-size: 24px;
+        font-weight: bold;
+        color: #337ab7;
+    }
+
+    /* Footer */
+    .widget-footer {
+        background-color: #f5f5f5;
+        padding: 10px 20px;
+        border-top: 1px solid #eee;
+        color: #337ab7;
+        font-weight: 600;
+        transition: color 0.2s;
+    }
+    .widget-footer:hover { color: #23527c; }
+</style>
+
+<div class="row">
+    <% Object.keys(roomCache).forEach(function(roomName) { 
+        const room = roomCache[roomName]; 
+        const isOnline = room.sensor_status === 'online';
+    %>
+    
+    <div class="col-md-6 col-lg-4">
+        <div class="panel widget-panel">
+            
+            <div class="widget-header">
+                <h3 class="widget-title"><i class="fa fa-map-marker"></i> &nbsp;<%= room.sensor_name %></h3>
+                
+                <div class="status-badge">
+                    <span class="status-dot <%= isOnline ? 'is-online' : 'is-offline' %>"></span>
+                    
+                </div>
+            </div>
+
+            <div class="widget-body">
+                
+                <div class="data-row">
+                    <div class="main-metric">
+                        <div class="metric-icon"><i class="fa fa-thermometer-half fa-3x"></i></div>
+                        <div>
+                            <div class="metric-label">Temperature</div>
+                            <div class="metric-value">
+                                <%= room.last_temperature !== null && room.last_temperature !== undefined ? room.last_temperature : '--' %>°
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="data-row">
+                    <div class="main-metric">
+                        <div class="metric-icon"><i class="fa fa-tint fa-2x"></i></div> <div>
+                            <div class="metric-label">Humidity</div>
+                            <div style="font-size: 24px; font-weight: 600; color: #555;">
+                                <%= room.last_humidity !== null && room.last_humidity !== undefined ? room.last_humidity : '--' %>%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr style="margin: 15px 0;">
+
+                <div class="control-box">
+                    <div class="metric-label" style="margin-bottom: 5px;">Target Temperature</div>
+                    
+                    <div class="control-actions">
+                        <a href="javascript:;" onclick="scadTemp('<%= roomName %>');" class="btn-circle btn-minus">
+                            <i class="fa fa-minus"></i>
+                        </a>
+
+                        <span class="setpoint-<%= roomName %> target-val">
+                            <%= room.temp_setpoint %>
+                        </span>
+
+                        <a href="javascript:;" onclick="crescTemp('<%= roomName %>');" class="btn-circle btn-plus">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <a href="javascript:;" onclick="getAChart();" style="text-decoration: none;">
+                <div class="widget-footer">
+                    <span class="pull-left">View Analytics</span>
+                    <span class="pull-right"><i class="fa fa-arrow-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <% }); %>
+</div>
+
+<script>
+function crescTemp(roomName){
+	console.log('Increasing temperature setpoint for room:', roomName);
+	// Update the UI first (Optimistic UI update)
+    var selector = '.setpoint-' + roomName;
+    var el = document.querySelector(selector);
+    if(el) {
+        var currentSetpoint = parseInt(el.textContent);
+        var newSetpoint = currentSetpoint + 1;
+        
+        // Send request to server
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:3000/api/crescTemp',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                room: roomName,
+                newSetpoint: newSetpoint
+            }),
+            success: function(data) {
+                console.log('Temperature setpoint increased successfully:', data);
+                document.querySelector(selector).textContent = newSetpoint;
+            },
+            error: function(err) {
+                console.error('Error increasing temperature setpoint:', err);
+                alert('Error updating temperature setpoint');
+                // Revert on error if needed
+                document.querySelector(selector).textContent = currentSetpoint;
+            }
+        });
+    }
+}
+
+function scadTemp(roomName){
+	console.log('Decreasing temperature setpoint for room:', roomName);
+	
+    var selector = '.setpoint-' + roomName;
+    var el = document.querySelector(selector);
+    
+    if(el) {
+        var currentSetpoint = parseInt(el.textContent);
+        var newSetpoint = currentSetpoint - 1;
+        
+        // Send request to server
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:3000/api/scadTemp',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                room: roomName,
+                newSetpoint: newSetpoint
+            }),
+            success: function(data) {
+                console.log('Temperature setpoint decreased successfully:', data);
+                document.querySelector(selector).textContent = newSetpoint;
+            },
+            error: function(err) {
+                console.error('Error decreasing temperature setpoint:', err);
+                alert('Error updating temperature setpoint');
+                document.querySelector(selector).textContent = currentSetpoint;
+            }
+        });
+    }
+}
+</script>

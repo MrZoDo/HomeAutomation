@@ -45,16 +45,14 @@
 
         // Create editable row
         var tr = document.createElement('tr');
-        tr.innerHTML = '\
+        tr.innerHTML = `\
 <td>\
-  <div class="input-group input-group-sm">\
-    <input type="text" class="form-control" id="new-sensor-name" placeholder="Enter sensor ype">\
-    <span class="input-group-btn">\
-      <button class="btn btn-primary btn-xs" id="save-sensor-btn">Save</button>\
-      <button class="btn btn-default btn-xs" id="cancel-sensor-btn">Cancel</button>\
-    </span>\
-  </div>\
-</td>';
+  <input type="text" class="form-control input-sm" id="new-sensor-name" placeholder="Enter sensor type">\
+</td>\
+<td class="text-right">\
+  <button class="btn btn-primary btn-xs" id="save-sensor-btn" disabled>Save</button>\
+  <button class="btn btn-default btn-xs" id="cancel-sensor-btn">Cancel</button>\
+</td>`;
 
         tbody.appendChild(tr);
         document.getElementById('new-sensor-name').focus();
@@ -62,9 +60,19 @@
         // Disable "Add" while editing
         document.getElementById('add-sensor-btn').disabled = true;
 
+        const nameInput = document.getElementById('new-sensor-name');
+        const saveBtn = document.getElementById('save-sensor-btn');
+
+        // Enable Save only when field is filled
+        function updateSaveState() {
+            saveBtn.disabled = !nameInput.value.trim();
+        }
+
+        nameInput.addEventListener('input', updateSaveState);
+
         // Save new sensor
         document.getElementById('save-sensor-btn').addEventListener('click', function() {
-            var new_sensorType = document.getElementById('new-sensor-name').value.trim();
+            var new_sensorType = nameInput.value.trim();
             if (!new_sensorType) {
                 alert('Please enter a type name.');
                 return;
@@ -83,9 +91,15 @@
                     }
             });
         });
+
+        // Cancel new entry
+        document.getElementById('cancel-sensor-btn').addEventListener('click', function() {
+            tr.remove();
+            document.getElementById('add-sensor-btn').disabled = false;
+        });
     });
 
-    // Handle "Delete" button clicks
+    // Handle delete button clicks for existing sensor types
     document.getElementById('sensor-table-body').addEventListener('click', function(e) {
         if (e.target.closest('.delete-sensor-btn')) {
             const tr = e.target.closest('tr');
@@ -104,15 +118,8 @@
     });
 
 
-    // Cancel new entry
-    document.getElementById('cancel-sensor-btn').addEventListener('click', function() {
-        tr.remove();
-        document.getElementById('add-sensor-btn').disabled = false;
-    });
-
-
     // Initialize
-    renderSensors();
+    renderSensorType();
 </script>
 
     <!-- Dependencies -->

@@ -1,5 +1,6 @@
 var roomTemp = require('./models/RoomTemp_model.js');
 var tempSensor = require('./models/TempSensor_model.js');
+var sensor = require('./models/Sensor_model.js');
 
 var mqtt = require('mqtt');
 var server = mqtt.connect('mqtt://localhost', {
@@ -38,9 +39,12 @@ async function loadRoomCache() {
 loadRoomCache();
 
 server.on('connect', function(){
-    server.subscribe('Temp/Cam1/Raspuns');
-    server.subscribe('Temp/Cam2/Raspuns');
+    // server.subscribe('Temp/Cam1/Raspuns');
+    // server.subscribe('Temp/Cam2/Raspuns');
     server.subscribe('RoomTemp/Raspuns');
+    server.subscribe('RoomTemp/ChangeSetpoint');
+    server.subscribe('RoomTemp/Setpoint/Confirmation');
+    server.subscribe('RoomName/Get');
     server.subscribe('OnOff/Confirm');
 
     /**ASCULT MESAJELE**/
@@ -51,10 +55,10 @@ server.on('connect', function(){
                 switch (topic) {
                     case "RoomTemp/Raspuns" :
                         console.log('Am primit raspunsul din call-ul de Crone : %s',message);
-                        var response = JSON.parse(message);
-                        var room = response.ESP;
-                        var temperatura = response.TEMP;
-                        var umiditatea = response.HUM;
+                        var messageData = JSON.parse(message);
+                        var room = messageData.ESP;
+                        var temperatura = messageData.TEMP;
+                        var umiditatea = messageData.HUM;
                         //var Data = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
                         // var DataTMP = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
                         var DataTMP = new Date();
@@ -85,10 +89,9 @@ server.on('connect', function(){
 
 
                         if (!roomCache[room]) {
-                            console.warn(`⚠️ No cache entry for ${room}, using default setpoint 22°C`);
+                            console.warn(`⚠️ No cache entry for ${room}, using default setpoint 20°C`);
                             roomCache[room] = { 
-                                sensor_name: 'Unknown',
-                                temp_setpoint: 22, 
+                                temp_setpoint: 20, 
                                 last_temperature: temperatura,
                                 last_humidity: umiditatea
                             };
@@ -107,6 +110,52 @@ server.on('connect', function(){
                             server.publish(topicOff, 'OFF');
                         }
 
+                        break;
+
+                    case "RoomTemp/ChangeSetpoint" :
+                        console.log('Received RoomTemp/ChangeSetpoint request:', message.toString());
+                        try {
+                            const messageData = JSON.parse(message.toString());
+                            const room = messageData.ROOM;
+                            const newSetpoint = messageData.SETPOINT;
+                            
+                            console.log(`Updating setpoint for room "${room}" to ${newSetpoint}`);
+                            
+                            // Update in database
+                            await tempSensor.updateTempSetpoint(room, newSetpoint);
+                            
+                            // Update in cache
+                            if (roomCache[room]) {
+                                roomCache[room].temp_setpoint = newSetpoint;
+                                console.log(`✅ Setpoint updated for ${room}:`, JSON.stringify(roomCache[room], null, 2));
+                            } else {
+                                console.warn(`⚠️ Room not found in cache: ${room}`);
+                            }
+                        } catch (err) {
+                            console.error('Error processing RoomTemp/ChangeSetpoint:', err);
+                        }
+                        break;
+
+                    case "RoomName/Get" :
+                        console.log('Received RoomName/Get request:', message.toString());
+                        try {
+                            const messageData = JSON.parse(message.toString());
+                            const sensorId = messageData.Sensor_ID;
+                            const sensorData = await sensor.findSensorById(sensorId);
+                            
+                            if (sensorData) {
+                                const responseData = {
+                                    sensor_id: sensorData.sensorID,
+                                    room: sensorData.room
+                                };
+                                console.log('Publishing RoomName/Response:', JSON.stringify(responseData));
+                                server.publish('RoomName/Response', JSON.stringify(responseData));
+                            } else {
+                                console.warn(`⚠️ Sensor not found for ID: ${sensorId}`);
+                            }
+                        } catch (err) {
+                            console.error('Error processing RoomName/Get:', err);
+                        }
                         break;
                     default:
                         console.log("Server a primit mesaj pe topic necunoscut");

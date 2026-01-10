@@ -1,0 +1,126 @@
+<div id="frm_floor">
+    <div class="panel panel-default" id="floor-widget">
+        <div class="panel-heading clearfix">
+            <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Floors</h4>
+            <button class="btn btn-success btn-xs pull-right" id="add-floor-btn">
+                <i class="fa fa-plus"></i> Add New Floor
+            </button>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover" id="floor-table">
+                    <tbody id="floor-table-body">
+                    <!-- MongoDB entries dynamically inserted here -->
+                    <% floors.forEach(function(floor){ %>
+                        <tr data-floor="<%= floor.floor_name %>">
+                            <td><%= floor.floor_name %></td>
+                            <td class="text-right">
+                                <button class="btn btn-danger btn-xs delete-floor-btn">
+                                    <i class="fa fa-trash"></i> Delete
+                                </button>
+                            </td>
+                        </tr>
+                    <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+    // Handle "Add New Floor"
+    document.getElementById('add-floor-btn').addEventListener('click', function() {
+        var tbody = document.getElementById('floor-table-body');
+
+        // Create editable row
+        var tr = document.createElement('tr');
+        tr.innerHTML = `\
+<td>\
+  <input type="text" class="form-control input-sm" id="new-floor-name" placeholder="Enter floor name">\
+</td>\
+<td class="text-right">\
+  <button class="btn btn-primary btn-xs" id="save-floor-btn" disabled>Save</button>\
+  <button class="btn btn-default btn-xs" id="cancel-floor-btn">Cancel</button>\
+</td>`;
+
+        tbody.appendChild(tr);
+        document.getElementById('new-floor-name').focus();
+
+        // Disable "Add" while editing
+        document.getElementById('add-floor-btn').disabled = true;
+
+        const nameInput = document.getElementById('new-floor-name');
+        const saveBtn = document.getElementById('save-floor-btn');
+
+        // Enable Save only when field is filled
+        function updateSaveState() {
+            saveBtn.disabled = !nameInput.value.trim();
+        }
+
+        nameInput.addEventListener('input', updateSaveState);
+
+        // Save new floor
+        document.getElementById('save-floor-btn').addEventListener('click', function() {
+            var new_floorName = nameInput.value.trim();
+            if (!new_floorName) {
+                alert('Please enter a floor name.');
+                return;
+            }
+
+            // Use AJAX to tell server to save it
+            $.post("http://localhost:3000/api/addFloor", { new_floor: new_floorName })
+                .done(function() {
+                    addFloor(); // call to refresh
+                })
+                .fail(function(xhr) {
+                    if (xhr.status === 409) {
+                        alert("Floor already exists!");
+                    } else {
+                        alert("Error saving floor: " + xhr.statusText);
+                    }
+            });
+        });
+
+        // Cancel new entry
+        document.getElementById('cancel-floor-btn').addEventListener('click', function() {
+            tr.remove();
+            document.getElementById('add-floor-btn').disabled = false;
+        });
+    });
+
+    // Handle delete button clicks for existing floors
+    document.getElementById('floor-table-body').addEventListener('click', function(e) {
+        if (e.target.closest('.delete-floor-btn')) {
+            const tr = e.target.closest('tr');
+            const floorName = tr.getAttribute('data-floor');
+
+            if (confirm(`Are you sure you want to delete "${floorName}"?`)) {
+                $.post("http://localhost:3000/api/deleteFloor", { floor: floorName })
+                        .done(function() {
+                            addFloor(); // refresh the table
+                        })
+                        .fail(function(xhr) {
+                            alert("Error deleting floor: " + xhr.statusText);
+                        });
+            }
+        }
+    });
+
+
+    // Initialize
+    renderFloors();
+</script>
+
+    <!-- Dependencies -->
+    <!-- Bootstrap 3.3.4 + Font Awesome + jQuery + SB Admin 2 -->
+    <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">-->
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">-->
+    <!--<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/1.0.8/js/sb-admin-2.min.js"></script>-->
+
+    <!-- For the function that loads the form. Needed for Refresh. -->
+    <script src="../Layout/js/scripts.js"></script>

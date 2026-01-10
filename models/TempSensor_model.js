@@ -7,6 +7,7 @@ var db = require('../lib/database_connection');
 var tempSensorSchema = new db.Schema({
     sensorID :      {type: String, unique: true, required: true},  //Unique ID for each sensor
     room :          {type: String, required: true}, //Selected from the list of defined rooms
+    floor :         {type: String}, //Floor associated with the room
     sensor_name :   {type: String, required: true}, //Manually inserted
     sensor_type :   {type: String, required: true},  //Selected from the list of defined types
     temp_setpoint : {type: Number, default: 20},
@@ -36,11 +37,12 @@ async function loadSetPoint() {
 
 
 // Add temp sensor to database
-async function addTempSensor(sensorID,room,sensorName,sensorType) {
+async function addTempSensor(sensorID,room,sensorName,sensorType,floor) {
     console.log('Model: Request to save new Temp Sensor');
     var instance = new MyTempSensor();
     instance.sensorID = sensorID;
     instance.room = room;
+    instance.floor = floor;
     instance.sensor_name = sensorName;
     instance.sensor_type = sensorType;
     return instance.save();
