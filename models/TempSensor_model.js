@@ -26,8 +26,8 @@ MyTempSensor.ensureIndexes(); // or TempSensor.syncIndexes() for Mongoose 6+
 //Reads the roomSensor entries from database
 async function loadSetPoint() {
     try {
-        //MySensorType.find({}, 'sensor_type') → gets all docs but only includes the sensor_type field
-        const docs = await MyTempSensor.find({}, 'room sensor_name temp_setpoint last_temperature last_humidity').lean();  // lean() returns plain JS objects
+        //MyTempSensor.find({}, 'sensorID room floor sensor_name temp_setpoint last_temperature last_humidity') → gets all docs with these fields
+        const docs = await MyTempSensor.find({}, 'sensorID room floor sensor_name temp_setpoint last_temperature last_humidity').lean();  // lean() returns plain JS objects
         return docs;
     } catch (error) {
         console.error('Error loading collection:', error);

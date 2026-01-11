@@ -1,6 +1,8 @@
 var db = require('../lib/database_connection');
 var RoomTempSchema = new db.Schema({
     room :          {type: String, unique: false},
+    floor :         {type: String, unique: false}, //Floor associated with the room
+    sensorID :      {type: String, unique: false}, //Unique ID for each sensor
     temperatura :   {type: Number, unique: false},
     umiditatea :    {type: Number, unique: false},
     Data:           {type: String, unique: false},
@@ -15,10 +17,12 @@ var MyTemp = db.mongoose.model('RoomTemp', RoomTempSchema);
 
 
 // Add temp to database
-function addTemp(room, temperatura, umiditatea, Data, An, Luna, Ziua, Ora, Minut, callback) {
+function addTemp(room, floor, sensorID, temperatura, umiditatea, Data, An, Luna, Ziua, Ora, Minut, callback) {
     console.log('Model: Request to save temp & hum');
     var instance = new MyTemp();
     instance.room = room ;
+    instance.floor = floor ;
+    instance.sensorID = sensorID ;
     instance.temperatura = temperatura ;
     instance.umiditatea = umiditatea ;
     instance.Data = Data ;
@@ -49,7 +53,7 @@ function addTemp(room, temperatura, umiditatea, Data, An, Luna, Ziua, Ora, Minut
 function getDbTemp(query){
     return new Promise( function (resolve, reject) {
         //console.log('Query pt functie:',query);
-        MyTemp.find(query,'tempID temperatura  umiditatea Data',function (err, docs) {
+        MyTemp.find(query,'sensorID floor room temperatura umiditatea Data',function (err, docs) {
             if(err){
                 return reject(err)
             }

@@ -154,7 +154,7 @@
 <div class="row">
 <% Object.keys(roomCache).forEach(function(roomName) { 
     const room = roomCache[roomName];
-    // Determine status
+    // Determine status - use sensor_status from roomCache, default to 'Offline' if not set
     const isOnline = (room.sensor_status && room.sensor_status.toLowerCase() === 'online');
 %>
 

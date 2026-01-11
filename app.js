@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cron = require('./cron');
+var serverMQTT = require('./serverMQTT');
 
 var indexRouter = require('./routes/index');
 var tempRouter = require('./routes/temps');

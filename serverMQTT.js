@@ -21,19 +21,36 @@ var server = mqtt.connect('mqtt://localhost', {
 
 // --- In-memory cache ---
 const roomCache = {}; // { roomName: { setpoint, lastTemperature } }
+let roomStatusChecked = false; // Flag to track if checkRoomStatus has been called
 
 // --- Load room setpoints into cache at startup ---
 async function loadRoomCache() {
     const rooms = await tempSensor.loadSetPoint();
     rooms.forEach((r) => {
         roomCache[r.room] = { 
+            sensorID: r.sensorID,
+            floor: r.floor,
             sensor_name: r.sensor_name,
             temp_setpoint: r.temp_setpoint, 
             last_temperature: r.last_temperature,
-            last_humidity: r.last_humidity
+            last_humidity: r.last_humidity,
+            sensor_status: 'Offline'
         };
     });
     console.log("✅ Room cache loaded:", roomCache);
+    
+    // --- Ensure checkRoomStatus runs with timeout/retry ---
+    if (!roomStatusChecked && server.connected) {
+        checkRoomStatus();
+    } else if (!roomStatusChecked) {
+        // If not connected yet, set a timeout to retry
+        setTimeout(() => {
+            if (!roomStatusChecked && server.connected) {
+                console.log('⏱️ Retrying room status check after timeout...');
+                checkRoomStatus();
+            }
+        }, 2000); // Retry after 2 seconds
+    }
 };
 
 loadRoomCache();
@@ -46,6 +63,12 @@ server.on('connect', function(){
     server.subscribe('RoomTemp/Setpoint/Confirmation');
     server.subscribe('RoomName/Get');
     server.subscribe('OnOff/Confirm');
+    server.subscribe('RoomStatus/Raspuns');
+    
+    // --- Check room status on MQTT connection ---
+    if (!roomStatusChecked) {
+        checkRoomStatus();
+    }
 
     /**ASCULT MESAJELE**/
     /****************START************************/
@@ -82,8 +105,11 @@ server.on('connect', function(){
                          console.log('Ora : %s',Ora);
                          console.log('Minut : %s',Minut);
                          */
+
                         //--- Save to Database ---
-                        roomTemp.addTemp(room, temperatura, umiditatea, DataTMP, An, Luna, Ziua, Ora, Minut, function(err, Temp){
+                        //-- Get the sensorID and floor from cache ---
+                        const cacheEntry = roomCache[room] || {};
+                        roomTemp.addTemp(room, cacheEntry.floor, cacheEntry.sensorID, temperatura, umiditatea, DataTMP, An, Luna, Ziua, Ora, Minut, function(err, Temp){
                             if (err) console.log(err);
                         });
 
@@ -91,6 +117,8 @@ server.on('connect', function(){
                         if (!roomCache[room]) {
                             console.warn(`⚠️ No cache entry for ${room}, using default setpoint 20°C`);
                             roomCache[room] = { 
+                                sensorID: undefined,
+                                floor: undefined,
                                 temp_setpoint: 20, 
                                 last_temperature: temperatura,
                                 last_humidity: umiditatea
@@ -146,7 +174,8 @@ server.on('connect', function(){
                             if (sensorData) {
                                 const responseData = {
                                     sensor_id: sensorData.sensorID,
-                                    room: sensorData.room
+                                    room: sensorData.room,
+                                    sensor_name: sensorData.sensor_name
                                 };
                                 console.log('Publishing RoomName/Response:', JSON.stringify(responseData));
                                 server.publish('RoomName/Response', JSON.stringify(responseData));
@@ -157,6 +186,30 @@ server.on('connect', function(){
                             console.error('Error processing RoomName/Get:', err);
                         }
                         break;
+
+                    case "RoomStatus/Raspuns" :
+                        console.log('Received RoomStatus/Raspuns:', message.toString());
+                        try {
+                            const messageData = JSON.parse(message.toString());
+                            const room = messageData.ROOM;
+                            const status = messageData.Status;
+                            
+                            if (room && status) {
+                                // Update the cache with sensor status
+                                if (roomCache[room]) {
+                                    roomCache[room].sensor_status = status;
+                                    console.log(`✅ Room ${room} status updated to ${status}:`, JSON.stringify(roomCache[room], null, 2));
+                                } else {
+                                    console.warn(`⚠️ Room not found in cache: ${room}`);
+                                }
+                            } else {
+                                console.warn(`⚠️ Invalid RoomStatus message format:`, messageData);
+                            }
+                        } catch (err) {
+                            console.error('Error processing RoomStatus/Raspuns:', err);
+                        }
+                        break;
+
                     default:
                         console.log("Server a primit mesaj pe topic necunoscut");
                 }
@@ -174,10 +227,22 @@ server.on('connect', function(){
 
 /**DEFINIRE FUNCTII**/
 
-/**1- Citesc si salvez temperatura din toate camerele**/
+// --- Citesc si salvez temperatura din toate camerele**/
 function SaveRoomTemp(){
     server.publish('RoomTemp/Cerere', 'GET');
     console.log('Serverul a trimis request de temperatura');
+}
+
+// --- Check room status and request status from all sensors ---
+// This function is designed to run only once at startup
+function checkRoomStatus(){
+    if (roomStatusChecked) {
+        console.log('⚠️ Room status already checked, skipping...');
+        return;
+    }
+    roomStatusChecked = true;
+    server.publish('RoomStatus/Cerere', 'GET');
+    console.log('✅ Room status check initiated - GET request published on RoomStatus/Cerere');
 }
 
 function LedOn(){
@@ -219,6 +284,7 @@ module.exports.OFF = LedOff;
 module.exports.GetTemp = GetTemp;
 module.exports.roomCache = roomCache;
 module.exports.SaveRoomTemp = SaveRoomTemp;
+module.exports.checkRoomStatus = checkRoomStatus;
 
 
 
