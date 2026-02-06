@@ -21,7 +21,7 @@ tempSensorSchema.index({ room: 1, sensor_type: 1 }, { unique: true });
 //'tempSensor' is the name of the collection the model is for
 //Mongoose automatically looks for the plural, lowercased version of the model name. In this case the collection is actually called 'tempSensors'
 var MyTempSensor = db.mongoose.model('tempSensor', tempSensorSchema);
-MyTempSensor.ensureIndexes(); // or TempSensor.syncIndexes() for Mongoose 6+
+// Note: Mongoose will automatically create indexes on first connection, no need to call ensureIndexes()
 
 //Reads the roomSensor entries from database
 async function loadSetPoint() {

@@ -127,6 +127,19 @@
         background: #f0f8ff;
     }
 
+    .btn-circle-outline.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        border-color: #ccc;
+        color: #ccc;
+    }
+
+    .btn-circle-outline.disabled:hover {
+        border-color: #ccc;
+        color: #ccc;
+        background: transparent;
+    }
+
     .control-buttons {
         display: flex;
         gap: 10px; /* Note: gap property might not work in very old browsers, margin backup included */
@@ -215,15 +228,27 @@
                                 </div>
 
                                 <div class="control-buttons" style="display: flex; align-items: center;">
-                                    <a href="javascript:;" onclick="scadTemp('<%= roomName %>');" class="btn-circle-outline">
-                                        <i class="fa fa-minus"></i>
-                                    </a>
+                                    <% if (isOnline) { %>
+                                        <a href="javascript:;" onclick="scadTemp('<%= roomName %>');" class="btn-circle-outline">
+                                            <i class="fa fa-minus"></i>
+                                        </a>
+                                    <% } else { %>
+                                        <a href="javascript:;" onclick="alert('Sensor is offline');" class="btn-circle-outline disabled">
+                                            <i class="fa fa-minus"></i>
+                                        </a>
+                                    <% } %>
                                     
                                     <span class="control-spacer"></span>
                                     
-                                    <a href="javascript:;" onclick="crescTemp('<%= roomName %>');" class="btn-circle-outline">
-                                        <i class="fa fa-plus"></i>
-                                    </a>
+                                    <% if (isOnline) { %>
+                                        <a href="javascript:;" onclick="crescTemp('<%= roomName %>');" class="btn-circle-outline">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                    <% } else { %>
+                                        <a href="javascript:;" onclick="alert('Sensor is offline');" class="btn-circle-outline disabled">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                    <% } %>
                                 </div>
                             </div>
                         </div>
@@ -276,7 +301,7 @@ function crescTemp(roomName){
                 console.error('Error:', err);
                 // Revert if error
                 el.textContent = currentSetpoint + '°C';
-                alert('Error updating temperature setpoint');
+                alert('The sensor is not responding. Unable to update temperature setpoint.');
             }
         });
     }
@@ -308,7 +333,7 @@ function scadTemp(roomName){
             error: function(err) {
                 console.error('Error:', err);
                 el.textContent = currentSetpoint + '°C';
-                alert('Error updating temperature setpoint');
+                alert('The sensor is not responding. Unable to update temperature setpoint.');
             }
         });
     }

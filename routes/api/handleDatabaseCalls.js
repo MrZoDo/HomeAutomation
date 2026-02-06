@@ -241,19 +241,12 @@ router.post('/crescTemp', async function(req, res, next) {
     try {
         const room = req.body.room;
         const newSetpoint = req.body.newSetpoint;
-        const ts = require('../../models/TempSensor_model.js');
         const serverMQTT = require('../../serverMQTT');
         
-        // Update in database
-        const result = await ts.updateTempSetpoint(room, newSetpoint);
+        // Publish to MQTT and wait for confirmation
+        const result = await serverMQTT.publishSetpointUpdate(room, newSetpoint);
         
-        // Update in roomCache
-        if (serverMQTT.roomCache[room]) {
-            serverMQTT.roomCache[room].temp_setpoint = newSetpoint;
-            console.log(`✅ Room cache updated for ${room}:`, JSON.stringify(serverMQTT.roomCache[room], null, 2));
-        }
-        
-        console.log('Route: Model Response -> Temp Setpoint increased successfully:', result);
+        console.log('API Route: Setpoint increased successfully:', result);
         res.json({ success: true, newSetpoint: newSetpoint });
     } catch (err) {
         console.error('Error increasing temp setpoint:', err);
@@ -267,19 +260,12 @@ router.post('/scadTemp', async function(req, res, next) {
     try {
         const room = req.body.room;
         const newSetpoint = req.body.newSetpoint;
-        const ts = require('../../models/TempSensor_model.js');
         const serverMQTT = require('../../serverMQTT');
         
-        // Update in database
-        const result = await ts.updateTempSetpoint(room, newSetpoint);
+        // Publish to MQTT and wait for confirmation
+        const result = await serverMQTT.publishSetpointUpdate(room, newSetpoint);
         
-        // Update in roomCache
-        if (serverMQTT.roomCache[room]) {
-            serverMQTT.roomCache[room].temp_setpoint = newSetpoint;
-            console.log(`✅ Room cache updated for ${room}:`, JSON.stringify(serverMQTT.roomCache[room], null, 2));
-        }
-        
-        console.log('Route: Model Response -> Temp Setpoint decreased successfully:', result);
+        console.log('Route: Setpoint decreased successfully:', result);
         res.json({ success: true, newSetpoint: newSetpoint });
     } catch (err) {
         console.error('Error decreasing temp setpoint:', err);
