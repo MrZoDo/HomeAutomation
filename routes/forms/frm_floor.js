@@ -5,7 +5,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-    console.log('Route: S-a primit call pentru form-ul de Floor');
+    console.log('[FRM_FLOOR router]: S-a primit call pentru form-ul de Floor');
     var fm = require('../../models/Floor_model.js');
 
     fm.loadFloors()

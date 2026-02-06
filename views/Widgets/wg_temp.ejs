@@ -10,22 +10,24 @@
         border: 1px solid #e1e8ed;
         border-radius: 10px;
         background: #fff;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         overflow: hidden;
         transition: transform 0.2s;
     }
 
     .modern-panel:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     }
 
     /* Header Section */
     .modern-header {
-        background-color: #4A90E2; /* Clean Blue Theme */
+        background-color: #4A90E2;
+        /* Clean Blue Theme */
         color: #fff;
         padding: 15px 20px;
-        display: flex; /* Flexbox works in most browsers supported by BS3 era */
+        display: flex;
+        /* Flexbox works in most browsers supported by BS3 era */
         justify-content: space-between;
         align-items: center;
     }
@@ -56,8 +58,15 @@
         display: inline-block;
         margin-right: 6px;
     }
-    .dot-online { background-color: #2ecc71; box-shadow: 0 0 5px #2ecc71; }
-    .dot-offline { background-color: #e74c3c; }
+
+    .dot-online {
+        background-color: #2ecc71;
+        box-shadow: 0 0 5px #2ecc71;
+    }
+
+    .dot-offline {
+        background-color: #e74c3c;
+    }
 
     /* Body Layout */
     .modern-body {
@@ -78,7 +87,8 @@
 
     .stat-icon {
         font-size: 24px;
-        color: #555; /* Simple dark grey icon */
+        color: #555;
+        /* Simple dark grey icon */
         width: 40px;
         text-align: center;
         margin-right: 15px;
@@ -132,6 +142,7 @@
         cursor: not-allowed;
         border-color: #ccc;
         color: #ccc;
+        pointer-events: none;
     }
 
     .btn-circle-outline.disabled:hover {
@@ -142,11 +153,13 @@
 
     .control-buttons {
         display: flex;
-        gap: 10px; /* Note: gap property might not work in very old browsers, margin backup included */
+        gap: 10px;
+        /* Note: gap property might not work in very old browsers, margin backup included */
     }
-    
+
     .control-spacer {
-        width: 10px; /* Spacer for older browsers */
+        width: 10px;
+        /* Spacer for older browsers */
         display: inline-block;
     }
 
@@ -158,184 +171,288 @@
         font-size: 13px;
         transition: color 0.2s;
     }
+
     .modern-footer:hover {
         color: #4A90E2;
         background-color: #f9f9f9;
+        cursor: pointer;
     }
 </style>
 
-<div class="row">
-<% Object.keys(roomCache).forEach(function(roomName) { 
-    const room = roomCache[roomName];
-    // Determine status - use sensor_status from roomCache, default to 'Offline' if not set
-    const isOnline = (room.sensor_status && room.sensor_status.toLowerCase() === 'online');
-%>
+<div id="wg-temp-container">
+    <div class="row">
+        <% 
+            Object.keys(roomCache).forEach(function(roomName) { 
+                const room = roomCache[roomName];
+                const isOnline = (room.sensor_status && room.sensor_status.toLowerCase() === 'online');
+        %>
 
-    <div class="col-md-6 col-lg-4 widget-wrapper">
-        <div class="modern-panel">
-            
-            <div class="modern-header">
-                <div class="room-title">
-                    <i class="fa fa-cloud" style="margin-right: 10px; opacity: 0.8;"></i> 
-                    <%= room.sensor_name %>
-                </div>
-                <div class="status-pill">
-                    <span class="status-dot <%= isOnline ? 'dot-online' : 'dot-offline' %>"></span>
-                    <span><%= isOnline ? 'Online' : 'Offline' %></span>
-                </div>
-            </div>
+        <div class="col-md-6 col-lg-4 widget-wrapper">
+            <div class="modern-panel">
 
-            <div class="modern-body">
-                
-                <div class="row">
-                    <div class="col-xs-6">
-                        <div class="stat-card">
-                            <div class="stat-icon"><i class="fa fa-thermometer-half"></i></div>
-                            <div class="stat-content">
-                                <h4>Room Temp</h4>
-                                <div class="stat-value">
-                                    <%= room.last_temperature !== null && room.last_temperature !== undefined ? room.last_temperature : '99' %>°C
-                                </div>
-                            </div>
-                        </div>
+                <div class="modern-header">
+                    <div class="room-title">
+                        <i class="fa fa-cloud" style="margin-right: 10px; opacity: 0.8;"></i>
+                        <%= room.sensor_name %>
                     </div>
-
-                    <div class="col-xs-6">
-                        <div class="stat-card">
-                            <div class="stat-icon"><i class="fa fa-tint"></i></div>
-                            <div class="stat-content">
-                                <h4>Room Humidity</h4>
-                                <div class="stat-value">
-                                    <%= room.last_humidity !== null && room.last_humidity !== undefined ? room.last_humidity : '99' %>%
-                                </div>
-                            </div>
-                        </div>
+                    <div class="status-pill">
+                        <span class="status-dot dot-<%= isOnline ? 'online' : 'offline' %>"
+                            id="status-dot-<%= roomName %>"></span>
+                        <span id="status-text-<%= roomName %>">
+                            <%= isOnline ? 'Online' : 'Offline' %>
+                        </span>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="stat-card">
-                            <div class="control-row">
-                                <div style="display: flex; align-items: center;">
-                                    <div class="stat-icon"><i class="fa fa-heartbeat"></i></div>
-                                    <div class="stat-content">
-                                        <h4>Room temperature setpoint</h4>
-                                        <div class="stat-value setpoint-<%= roomName %>">
-                                            <%= room.temp_setpoint %>°C
-                                        </div>
+                <div class="modern-body">
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="stat-card">
+                                <div class="stat-icon"><i class="fa fa-thermometer-half"></i></div>
+                                <div class="stat-content">
+                                    <h4>Room Temp</h4>
+                                    <div class="stat-value" id="temp-val-<%= roomName %>">
+                                        <%= room.last_temperature !==null && room.last_temperature !==undefined ?
+                                            room.last_temperature : '99' %>°C
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
-                                <div class="control-buttons" style="display: flex; align-items: center;">
-                                    <% if (isOnline) { %>
-                                        <a href="javascript:;" onclick="scadTemp('<%= roomName %>');" class="btn-circle-outline">
-                                            <i class="fa fa-minus"></i>
-                                        </a>
-                                    <% } else { %>
-                                        <a href="javascript:;" onclick="alert('Sensor is offline');" class="btn-circle-outline disabled">
-                                            <i class="fa fa-minus"></i>
-                                        </a>
-                                    <% } %>
-                                    
-                                    <span class="control-spacer"></span>
-                                    
-                                    <% if (isOnline) { %>
-                                        <a href="javascript:;" onclick="crescTemp('<%= roomName %>');" class="btn-circle-outline">
-                                            <i class="fa fa-plus"></i>
-                                        </a>
-                                    <% } else { %>
-                                        <a href="javascript:;" onclick="alert('Sensor is offline');" class="btn-circle-outline disabled">
-                                            <i class="fa fa-plus"></i>
-                                        </a>
-                                    <% } %>
+                        <div class="col-xs-6">
+                            <div class="stat-card">
+                                <div class="stat-icon"><i class="fa fa-tint"></i></div>
+                                <div class="stat-content">
+                                    <h4>Room Humidity</h4>
+                                    <div class="stat-value" id="hum-val-<%= roomName %>">
+                                        <%= room.last_humidity !==null && room.last_humidity !==undefined ?
+                                            room.last_humidity : '99' %>%
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="stat-card">
+                                <div class="control-row">
+                                    <div style="display: flex; align-items: center;">
+                                        <div class="stat-icon"><i class="fa fa-heartbeat"></i></div>
+                                        <div class="stat-content">
+                                            <h4>Room temperature setpoint</h4>
+                                            <div class="stat-value setpoint-<%= roomName %>"
+                                                id="setpoint-val-<%= roomName %>">
+                                                <%= room.temp_setpoint %>°C
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-buttons" style="display: flex; align-items: center;">
+                                        <a href="javascript:;" onclick="scadTemp('<%= roomName %>');"
+                                            class="btn-circle-outline <%= isOnline ? '' : 'disabled' %> btn-minus-<%= roomName %>">
+                                            <i class="fa fa-minus"></i>
+                                        </a>
+
+                                        <span class="control-spacer"></span>
+
+                                        <a href="javascript:;" onclick="crescTemp('<%= roomName %>');"
+                                            class="btn-circle-outline <%= isOnline ? '' : 'disabled' %> btn-plus-<%= roomName %>">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+
+                <a href="javascript:;" onclick="getAChart();" style="text-decoration: none;">
+                    <div class="modern-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
 
             </div>
-
-            <a href="javascript:;" onclick="getAChart();" style="text-decoration: none;">
-                <div class="modern-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
-
         </div>
-    </div>
 
-<% }); %>
+        <% }); %>
+    </div>
 </div>
 
 <script>
-function crescTemp(roomName){
-	console.log('Increasing temperature setpoint for room:', roomName);
-    
-    // Select element
-    var el = document.querySelector('.setpoint-' + roomName);
-    if(el) {
-        // Parse int to remove "°C" for calculation
-        var currentText = el.textContent;
-        var currentSetpoint = parseInt(currentText); 
-        var newSetpoint = currentSetpoint + 1;
+    // --- Polling Logic ---
+    let pollingInterval = null;
+
+    // Function to start polling
+    function startPolling() {
+        if (pollingInterval !== null) {
+            return; // Already polling
+        }
+
+        console.log('✅ Starting room status polling');
         
-        // Optimistic UI Update
-        el.textContent = newSetpoint + '°C';
-
-        $.ajax({
-            type: 'POST',
-            url: 'http://localhost:3000/api/crescTemp',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                room: roomName,
-                newSetpoint: newSetpoint
-            }),
-            success: function(data) {
-                console.log('Success:', data);
-            },
-            error: function(err) {
-                console.error('Error:', err);
-                // Revert if error
-                el.textContent = currentSetpoint + '°C';
-                alert('The sensor is not responding. Unable to update temperature setpoint.');
+        pollingInterval = setInterval(function () {
+            // Check if the container div still exists in the DOM
+            const container = document.getElementById('wg-temp-container');
+            if (!container) {
+                console.log('❌ wg-temp-container no longer in DOM, stopping polling');
+                stopPolling();
+                return;
             }
-        });
+
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:3000/api/getRoomStatus',
+                dataType: 'json',
+                success: function (roomCache) {
+                    // Iterate over each room in the received cache
+                    Object.keys(roomCache).forEach(function (roomName) {
+                        const room = roomCache[roomName];
+                        const isOnline = (room.sensor_status && room.sensor_status.toLowerCase() === 'online');
+
+                        // 1. Update Status
+                        const statusDot = document.getElementById('status-dot-' + roomName);
+                        const statusText = document.getElementById('status-text-' + roomName);
+                        if (statusDot && statusText) {
+                            if (isOnline) {
+                                statusDot.classList.remove('dot-offline');
+                                statusDot.classList.add('dot-online');
+                                statusText.innerText = 'Online';
+                            } else {
+                                statusDot.classList.remove('dot-online');
+                                statusDot.classList.add('dot-offline');
+                                statusText.innerText = 'Offline';
+                            }
+                        }
+
+                        // 2. Update Temp
+                        const tempVal = document.getElementById('temp-val-' + roomName);
+                        if (tempVal) {
+                            tempVal.innerText = (room.last_temperature !== undefined && room.last_temperature !== null) ? room.last_temperature + '°C' : '99°C';
+                        }
+
+                        // 3. Update Humidity
+                        const humVal = document.getElementById('hum-val-' + roomName);
+                        if (humVal) {
+                            humVal.innerText = (room.last_humidity !== undefined && room.last_humidity !== null) ? room.last_humidity + '%' : '99%';
+                        }
+
+                        // 4. Update Setpoint (only if not currently being edited? For now just overwrite)
+                        const setpointVal = document.getElementById('setpoint-val-' + roomName);
+                        if (setpointVal) {
+                            setpointVal.innerText = room.temp_setpoint + '°C';
+                        }
+
+                        // 5. Update Buttons (Enable/Disable)
+                        const btnMinus = document.querySelector('.btn-minus-' + roomName);
+                        const btnPlus = document.querySelector('.btn-plus-' + roomName);
+
+                        if (isOnline) {
+                            if (btnMinus) btnMinus.classList.remove('disabled');
+                            if (btnPlus) btnPlus.classList.remove('disabled');
+                        } else {
+                            if (btnMinus) btnMinus.classList.add('disabled');
+                            if (btnPlus) btnPlus.classList.add('disabled');
+                        }
+                    });
+                },
+                error: function (err) {
+                    console.error('Error fetching room status:', err);
+                }
+            });
+        }, 3000); // Poll every 3 seconds
     }
-}
 
-function scadTemp(roomName){
-	console.log('Decreasing temperature setpoint for room:', roomName);
-
-    var el = document.querySelector('.setpoint-' + roomName);
-    if(el) {
-        var currentText = el.textContent;
-        var currentSetpoint = parseInt(currentText);
-        var newSetpoint = currentSetpoint - 1;
-        
-        // Optimistic UI Update
-        el.textContent = newSetpoint + '°C';
-
-        $.ajax({
-            type: 'POST',
-            url: 'http://localhost:3000/api/scadTemp',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                room: roomName,
-                newSetpoint: newSetpoint
-            }),
-            success: function(data) {
-                console.log('Success:', data);
-            },
-            error: function(err) {
-                console.error('Error:', err);
-                el.textContent = currentSetpoint + '°C';
-                alert('The sensor is not responding. Unable to update temperature setpoint.');
-            }
-        });
+    // Function to stop polling
+    function stopPolling() {
+        if (pollingInterval !== null) {
+            console.log('⏹️  Stopping room status polling');
+            clearInterval(pollingInterval);
+            pollingInterval = null;
+        }
     }
-}
+
+    // Start polling when page loads
+    window.addEventListener('load', function () {
+        startPolling();
+    });
+
+    // Also start immediately in case load event already fired
+    startPolling();
+
+
+    function crescTemp(roomName) {
+        console.log('Increasing temperature setpoint for room:', roomName);
+
+        // Select element
+        var el = document.querySelector('.setpoint-' + roomName);
+        if (el) {
+            // Double check online status via class checks as a safeguard, 
+            // though the button should be disabled via CSS pointer-events
+
+            // Parse int to remove "°C" for calculation
+            var currentText = el.textContent;
+            var currentSetpoint = parseInt(currentText);
+            var newSetpoint = currentSetpoint + 1;
+
+            // Optimistic UI Update
+            el.textContent = newSetpoint + '°C';
+
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:3000/api/crescTemp',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    room: roomName,
+                    newSetpoint: newSetpoint
+                }),
+                success: function (data) {
+                    console.log('Success:', data);
+                },
+                error: function (err) {
+                    console.error('Error:', err);
+                    // Revert if error
+                    el.textContent = currentSetpoint + '°C';
+                    alert('The sensor is not responding. Unable to update temperature setpoint.');
+                }
+            });
+        }
+    }
+
+    function scadTemp(roomName) {
+        console.log('Decreasing temperature setpoint for room:', roomName);
+
+        var el = document.querySelector('.setpoint-' + roomName);
+        if (el) {
+            var currentText = el.textContent;
+            var currentSetpoint = parseInt(currentText);
+            var newSetpoint = currentSetpoint - 1;
+
+            // Optimistic UI Update
+            el.textContent = newSetpoint + '°C';
+
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:3000/api/scadTemp',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    room: roomName,
+                    newSetpoint: newSetpoint
+                }),
+                success: function (data) {
+                    console.log('Success:', data);
+                },
+                error: function (err) {
+                    console.error('Error:', err);
+                    el.textContent = currentSetpoint + '°C';
+                    alert('The sensor is not responding. Unable to update temperature setpoint.');
+                }
+            });
+        }
+    }
 </script>

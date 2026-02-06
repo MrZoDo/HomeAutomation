@@ -1,7 +1,7 @@
 "use strict";
 var cron = require('node-cron');
 
-var server = require('./serverMQTT');
+var server = require('./MQTT/serverMQTT');
 
 
 /** Ruleaza la fiecare minut **/
