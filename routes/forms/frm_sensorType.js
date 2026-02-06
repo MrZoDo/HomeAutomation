@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-    console.log('Route: S-a primit call pentru form-ul de SensorType');
+    console.log('[FRM_SENSOR_TYPE router]: S-a primit call pentru form-ul de SensorType');
 
     var st = require('../../models/SensorType_model.js');
 

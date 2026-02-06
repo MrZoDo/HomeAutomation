@@ -17,6 +17,7 @@ ESP.on('connect', function () {
     ESP.subscribe('Temp/Cam1/Cerere');
     ESP.subscribe('Temp/Cam2/Cerere');
     ESP.subscribe('RoomTemp/Cerere');
+    ESP.subscribe('RoomStatus/All/Get');
 
     // Publish "Online" status with Retain flag
     console.log("📤 Sending Retained 'Online' status to RoomStatus/Living");
@@ -45,6 +46,10 @@ ESP.on('connect', function () {
                 Temp = Math.ceil(Math.random() * 100)
                 ESP.publish('RoomTemp/Raspuns', '{"ESP" : "Living", "TEMP" :' + Temp + '}');
                 console.log('Living a publicat temp');
+                break;
+            case "RoomStatus/All/Get":
+                console.log('📡 Received status request, sending Online status');
+                ESP.publish('RoomStatus/Living', JSON.stringify({ROOM: "Living", Status: "Online"}), { retain: true });
                 break;
             case "LED":
                 switch (mes) {

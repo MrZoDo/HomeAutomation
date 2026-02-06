@@ -122,6 +122,8 @@ server.on('connect', function () {
     // We rely on sensors sending retained "Online" messages and LWT "Offline".
         server.subscribe('RoomStatus/+');
 
+    // Request status from all sensors on startup (with small delay for retained messages to arrive)
+    setTimeout(requestAllRoomStatus, 1000);
 });
 
 server.on('reconnect', function () {
@@ -129,6 +131,12 @@ server.on('reconnect', function () {
 });
 
 /**DEFINIRE FUNCTII**/
+
+// --- Request status from all rooms on startup ---
+function requestAllRoomStatus() {
+    console.log('📡 Requesting room status from all sensors...');
+    server.publish('RoomStatus/AllRooms/Get', 'get_status');
+}
 
 // --- Citesc si salvez temperatura din toate camerele**/
 function SaveRoomTemp() {

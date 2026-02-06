@@ -179,10 +179,13 @@
     }
 </style>
 
-<div class="row">
-    <% Object.keys(roomCache).forEach(function(roomName) { const room=roomCache[roomName]; // Determine status - use
-        sensor_status from roomCache, default to 'Offline' if not set const isOnline=(room.sensor_status &&
-        room.sensor_status.toLowerCase()==='online' ); %>
+<div id="wg-temp-container">
+    <div class="row">
+        <% 
+            Object.keys(roomCache).forEach(function(roomName) { 
+                const room = roomCache[roomName];
+                const isOnline = (room.sensor_status && room.sensor_status.toLowerCase() === 'online');
+        %>
 
         <div class="col-md-6 col-lg-4 widget-wrapper">
             <div class="modern-panel">
@@ -278,72 +281,109 @@
         </div>
 
         <% }); %>
+    </div>
 </div>
 
 <script>
     // --- Polling Logic ---
-    setInterval(function () {
-        $.ajax({
-            type: 'GET',
-            url: 'http://localhost:3000/api/getRoomStatus',
-            dataType: 'json',
-            success: function (roomCache) {
-                // Iterate over each room in the received cache
-                Object.keys(roomCache).forEach(function (roomName) {
-                    const room = roomCache[roomName];
-                    const isOnline = (room.sensor_status && room.sensor_status.toLowerCase() === 'online');
+    let pollingInterval = null;
 
-                    // 1. Update Status
-                    const statusDot = document.getElementById('status-dot-' + roomName);
-                    const statusText = document.getElementById('status-text-' + roomName);
-                    if (statusDot && statusText) {
-                        if (isOnline) {
-                            statusDot.classList.remove('dot-offline');
-                            statusDot.classList.add('dot-online');
-                            statusText.innerText = 'Online';
-                        } else {
-                            statusDot.classList.remove('dot-online');
-                            statusDot.classList.add('dot-offline');
-                            statusText.innerText = 'Offline';
-                        }
-                    }
+    // Function to start polling
+    function startPolling() {
+        if (pollingInterval !== null) {
+            return; // Already polling
+        }
 
-                    // 2. Update Temp
-                    const tempVal = document.getElementById('temp-val-' + roomName);
-                    if (tempVal) {
-                        tempVal.innerText = (room.last_temperature !== undefined && room.last_temperature !== null) ? room.last_temperature + '°C' : '99°C';
-                    }
-
-                    // 3. Update Humidity
-                    const humVal = document.getElementById('hum-val-' + roomName);
-                    if (humVal) {
-                        humVal.innerText = (room.last_humidity !== undefined && room.last_humidity !== null) ? room.last_humidity + '%' : '99%';
-                    }
-
-                    // 4. Update Setpoint (only if not currently being edited? For now just overwrite)
-                    const setpointVal = document.getElementById('setpoint-val-' + roomName);
-                    if (setpointVal) {
-                        setpointVal.innerText = room.temp_setpoint + '°C';
-                    }
-
-                    // 5. Update Buttons (Enable/Disable)
-                    const btnMinus = document.querySelector('.btn-minus-' + roomName);
-                    const btnPlus = document.querySelector('.btn-plus-' + roomName);
-
-                    if (isOnline) {
-                        if (btnMinus) btnMinus.classList.remove('disabled');
-                        if (btnPlus) btnPlus.classList.remove('disabled');
-                    } else {
-                        if (btnMinus) btnMinus.classList.add('disabled');
-                        if (btnPlus) btnPlus.classList.add('disabled');
-                    }
-                });
-            },
-            error: function (err) {
-                console.error('Error fetching room status:', err);
+        console.log('✅ Starting room status polling');
+        
+        pollingInterval = setInterval(function () {
+            // Check if the container div still exists in the DOM
+            const container = document.getElementById('wg-temp-container');
+            if (!container) {
+                console.log('❌ wg-temp-container no longer in DOM, stopping polling');
+                stopPolling();
+                return;
             }
-        });
-    }, 3000); // Poll every 3 seconds
+
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:3000/api/getRoomStatus',
+                dataType: 'json',
+                success: function (roomCache) {
+                    // Iterate over each room in the received cache
+                    Object.keys(roomCache).forEach(function (roomName) {
+                        const room = roomCache[roomName];
+                        const isOnline = (room.sensor_status && room.sensor_status.toLowerCase() === 'online');
+
+                        // 1. Update Status
+                        const statusDot = document.getElementById('status-dot-' + roomName);
+                        const statusText = document.getElementById('status-text-' + roomName);
+                        if (statusDot && statusText) {
+                            if (isOnline) {
+                                statusDot.classList.remove('dot-offline');
+                                statusDot.classList.add('dot-online');
+                                statusText.innerText = 'Online';
+                            } else {
+                                statusDot.classList.remove('dot-online');
+                                statusDot.classList.add('dot-offline');
+                                statusText.innerText = 'Offline';
+                            }
+                        }
+
+                        // 2. Update Temp
+                        const tempVal = document.getElementById('temp-val-' + roomName);
+                        if (tempVal) {
+                            tempVal.innerText = (room.last_temperature !== undefined && room.last_temperature !== null) ? room.last_temperature + '°C' : '99°C';
+                        }
+
+                        // 3. Update Humidity
+                        const humVal = document.getElementById('hum-val-' + roomName);
+                        if (humVal) {
+                            humVal.innerText = (room.last_humidity !== undefined && room.last_humidity !== null) ? room.last_humidity + '%' : '99%';
+                        }
+
+                        // 4. Update Setpoint (only if not currently being edited? For now just overwrite)
+                        const setpointVal = document.getElementById('setpoint-val-' + roomName);
+                        if (setpointVal) {
+                            setpointVal.innerText = room.temp_setpoint + '°C';
+                        }
+
+                        // 5. Update Buttons (Enable/Disable)
+                        const btnMinus = document.querySelector('.btn-minus-' + roomName);
+                        const btnPlus = document.querySelector('.btn-plus-' + roomName);
+
+                        if (isOnline) {
+                            if (btnMinus) btnMinus.classList.remove('disabled');
+                            if (btnPlus) btnPlus.classList.remove('disabled');
+                        } else {
+                            if (btnMinus) btnMinus.classList.add('disabled');
+                            if (btnPlus) btnPlus.classList.add('disabled');
+                        }
+                    });
+                },
+                error: function (err) {
+                    console.error('Error fetching room status:', err);
+                }
+            });
+        }, 3000); // Poll every 3 seconds
+    }
+
+    // Function to stop polling
+    function stopPolling() {
+        if (pollingInterval !== null) {
+            console.log('⏹️  Stopping room status polling');
+            clearInterval(pollingInterval);
+            pollingInterval = null;
+        }
+    }
+
+    // Start polling when page loads
+    window.addEventListener('load', function () {
+        startPolling();
+    });
+
+    // Also start immediately in case load event already fired
+    startPolling();
 
 
     function crescTemp(roomName) {

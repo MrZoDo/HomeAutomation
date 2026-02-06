@@ -5,7 +5,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', async function(req, res, next) {
-    console.log('Route:S-a primit call pentru form-ul de Sensors');
+    console.log('[FRM_SENSORS router]: S-a primit call pentru form-ul de Sensors');
 
     try {
         const rm = require('../../models/Room_model.js');

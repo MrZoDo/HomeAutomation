@@ -108,7 +108,8 @@ async function handleRoomStatusUpdate(topic, message, roomCache) {
             return;
         }
         const room = parts[1];
-        const status = message.toString(); // "Online" or "Offline"
+        const statusMessage = JSON.parse(message.toString()); // { Status="Online" } or { Status="Offline" }
+        const status = statusMessage.Status; // "Online" or "Offline"
 
         if (room) {
             // Update the cache with sensor status
