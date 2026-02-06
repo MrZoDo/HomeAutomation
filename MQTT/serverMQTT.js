@@ -104,18 +104,24 @@ server.on('message', async function (topic, message, payload) {
 server.on('connect', function () {
     console.log('✅ MQTT Server Connected');
 
+    //========================
     // Subscribe to topics
-    server.subscribe('RoomTemp/Raspuns');
-    server.subscribe('RoomTemp/ChangeSetpoint');
-    server.subscribe('RoomTemp/Setpoint/Confirmation');
-    server.subscribe('RoomName/Get');
-    server.subscribe('OnOff/Confirm');
+    //========================
 
+    // Subscribe to RoomTemp/Raspuns to receive the temperature and humidity from the sensors
+        server.subscribe('RoomTemp/Raspuns');
+    // Subscribe to RoomTemp/ChangeSetpoint to receive the new setpoint value from the sensors
+        server.subscribe('RoomTemp/ChangeSetpoint');
+    // Subscribe to RoomTemp/Setpoint/Confirmation to receive the confirmation from the sensors that the setpoint has been updated
+        server.subscribe('RoomTemp/Setpoint/Confirmation');
+    // Subscribe to RoomName/Get to receive the requests for room name from the sensors
+        server.subscribe('RoomName/Get');
+    // Subscribe to OnOff/Confirm to receive the confirmation from the user that the device has been turned on or off
+        server.subscribe('OnOff/Confirm');
     // Subscribe to RoomStatus wildcard to receive retained messages and updates/LWT
-    server.subscribe('RoomStatus/+');
-
-    // NOTE: We no longer poll RoomStatus/Cerere here. 
     // We rely on sensors sending retained "Online" messages and LWT "Offline".
+        server.subscribe('RoomStatus/+');
+
 });
 
 server.on('reconnect', function () {
@@ -129,8 +135,6 @@ function SaveRoomTemp() {
     server.publish('RoomTemp/Cerere', 'GET');
     console.log('Serverul a trimis request de temperatura');
 }
-
-// NOTE: checkRoomStatus removed as it is no longer needed.
 
 
 // --- Publish setpoint update and wait for confirmation ---
@@ -197,5 +201,4 @@ function GetTemp(camId) {
 module.exports.GetTemp = GetTemp;
 module.exports.roomCache = roomCache;
 module.exports.SaveRoomTemp = SaveRoomTemp;
-// checkRoomStatus is removed
 module.exports.publishSetpointUpdate = publishSetpointUpdate;
