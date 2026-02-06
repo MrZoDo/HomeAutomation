@@ -5,99 +5,99 @@ var router = express.Router();
 //=============================
 // Handle calls for SensorType
 //=============================
-router.post('/addSensorType', async function(req, res, next) {
+router.post('/addSensorType', async function (req, res, next) {
     console.log('API Route: S-a primit POST call pentru salvarea unei intari de tip "Sensor Type" ');
     var sensor_type = req.body.new_sensor_type;
     var st = require('../../models/SensorType_model.js');
 
     st.addSensorType(sensor_type)
         .then(result => {
-        // Handle success: result is the saved document
+            // Handle success: result is the saved document
             console.log('Route: Model Response->Sensor Type saved successfully:', result);
             res.send({ success: true });
-         })
+        })
         .catch(err => {
-        // Handle error (e.g., validation error, unique constraint violation)
+            // Handle error (e.g., validation error, unique constraint violation)
             console.error('Error saving Sensor Type:', err);
-        // Handle specific errors, e.g., Mongoose unique constraint violation (Code 11000)
+            // Handle specific errors, e.g., Mongoose unique constraint violation (Code 11000)
             if (err.code === 11000) {
                 return res.status(409).send('Sensor type already exists.');
-            }else {
+            } else {
                 res.status(500).send(err);
             }
         });
 
 });
 
-router.post('/deleteSensorType', async function(req, res, next) {
+router.post('/deleteSensorType', async function (req, res, next) {
     console.log('API Route: S-a primit POST call pentru stergeres unei intari de tip "Sensor Type" ');
     var sensor_type = req.body.sensor_type;
     var st = require('../../models/SensorType_model.js');
 
     st.delSensorType(sensor_type)
         .then(result => {
-        // Handle failure
-         if (result.deletedCount === 0){
-            console.error('No sensor was deleted');
-            res.status(404).send("Sensor type not found");
+            // Handle failure
+            if (result.deletedCount === 0) {
+                console.error('No sensor was deleted');
+                res.status(404).send("Sensor type not found");
             }
 
-        console.log('Route: Model Response->Sensor Type deleted successfully');
-        res.sendStatus(200);
+            console.log('Route: Model Response->Sensor Type deleted successfully');
+            res.sendStatus(200);
 
 
-    });
+        });
 });
 
 //========================
 // Handle calls for Floor
 //========================
-router.post('/addFloor', async function(req, res, next) {
+router.post('/addFloor', async function (req, res, next) {
     console.log('API Route: S-a primit POST call pentru salvarea unei intari de tip "Floor" ');
     var floorName = req.body.new_floor;
     var fm = require('../../models/Floor_model.js');
 
     fm.addFloor(floorName)
         .then(result => {
-        // Handle success: result is the saved document
+            // Handle success: result is the saved document
             console.log('API Route: Model Response->Floor saved successfully:', result);
             res.send({ success: true });
         })
         .catch(err => {
-        // Handle error (e.g., validation error, unique constraint violation)
+            // Handle error (e.g., validation error, unique constraint violation)
             console.error('Error saving Floor:', err);
-        // Handle specific errors, e.g., Mongoose unique constraint violation (Code 11000)
+            // Handle specific errors, e.g., Mongoose unique constraint violation (Code 11000)
             if (err.code === 11000) {
                 return res.status(409).send('Floor already exists.');
-            }else {
+            } else {
                 res.status(500).send(err);
             }
         });
 });
 
-router.post('/deleteFloor', async function(req, res, next) {
+router.post('/deleteFloor', async function (req, res, next) {
     console.log('API Route: S-a primit POST call pentru stergeres unei intari de tip "Floor" ');
     var floorName = req.body.floor;
     var fm = require('../../models/Floor_model.js');
 
     fm.delFloor(floorName)
         .then(delResult => {
-        console.log(delResult);
-        // Handle failure
-        if (delResult.deletedCount === 0){
-            console.error('No floor was deleted');
-            res.status(404).send("Floor not found");
+            console.log(delResult);
+            // Handle failure
+            if (delResult.deletedCount === 0) {
+                console.error('No floor was deleted');
+                res.status(404).send("Floor not found");
             }
 
-        console.log('Route: Model Response->Floor deleted successfully');
-        res.sendStatus(200);
+            console.log('Route: Model Response->Floor deleted successfully');
+            res.sendStatus(200);
         });
 });
 
 //========================
 // Handle calls for Room
 //========================
-router.post('/addRoom', async function(req, res, next) {
+router.post('/addRoom', async function (req, res, next) {
     console.log('API Route: S-a primit POST call pentru salvarea unei intari de tip "Room" ');
     var roomName = req.body.new_room;
     var floorName = req.body.floor;
@@ -105,38 +105,38 @@ router.post('/addRoom', async function(req, res, next) {
 
     rm.addRoom(roomName, floorName)
         .then(result => {
-        // Handle success: result is the saved document
+            // Handle success: result is the saved document
             console.log('Route: Model Response->Room saved successfully:', result);
             res.send({ success: true });
         })
         .catch(err => {
-        // Handle error (e.g., validation error, unique constraint violation)
+            // Handle error (e.g., validation error, unique constraint violation)
             console.error('Error saving Room:', err);
-        // Handle specific errors, e.g., Mongoose unique constraint violation (Code 11000)
+            // Handle specific errors, e.g., Mongoose unique constraint violation (Code 11000)
             if (err.code === 11000) {
                 return res.status(409).send('Room already exists.');
-            }else {
+            } else {
                 res.status(500).send(err);
             }
         });
 });
 
-router.post('/deleteRoom', async function(req, res, next) {
+router.post('/deleteRoom', async function (req, res, next) {
     console.log('API Route: S-a primit POST call pentru stergeres unei intari de tip "Room" ');
     var roomName = req.body.room;
     var rm = require('../../models/Room_model.js');
 
     rm.delRoom(roomName)
         .then(delResult => {
-        console.log(delResult);
-        // Handle failure
-        if (delResult.deletedCount === 0){
-            console.error('No room was deleted');
-            res.status(404).send("Room not found");
+            console.log(delResult);
+            // Handle failure
+            if (delResult.deletedCount === 0) {
+                console.error('No room was deleted');
+                res.status(404).send("Room not found");
             }
 
-        console.log('Route: Model Response->Room deleted successfully');
-        res.sendStatus(200);
+            console.log('Route: Model Response->Room deleted successfully');
+            res.sendStatus(200);
         });
 });
 
@@ -182,34 +182,34 @@ router.post('/addSensor', async function (req, res, next) {
         // Handle specific errors, e.g., Mongoose unique constraint violation (Code 11000)
         if (err.code === 11000) {
             return res.status(409).send('Sensor already exists.');
-        }else {
+        } else {
             res.status(500).json({ success: false, error: err.message });
         }
 
     }
 });
 
-router.post('/deleteSensor', async function(req, res, next) {
+router.post('/deleteSensor', async function (req, res, next) {
     console.log('API Route: S-a primit POST call pentru stergeres unei intari de tip "Sensor" ');
 
-    try{
+    try {
         var sensorID = req.body.id;
         var se = require('../../models/Sensor_model.js');
         const deletedSensor = await se.delSensor(sensorID);
         console.log(deletedSensor);
-        if (deletedSensor.deletedCount === 0){
+        if (deletedSensor.deletedCount === 0) {
             console.error('No sensor was deleted');
             res.status(404).send("Sensor not found");
-        }else{
+        } else {
             console.log('Route: Model Response->Sensor deleted successfully');
 
             // Also try to delete from TempSensor
             try {
                 const ts = require('../../models/TempSensor_model.js');
                 const deletedTempSensor = await ts.delTempSensor(sensorID);
-                if (deletedTempSensor.deletedCount === 1){
+                if (deletedTempSensor.deletedCount === 1) {
                     console.log('Route: Model Response -> TempSensor deleted successfully');
-                }else{
+                } else {
                     console.log('Route: Model Response -> No sensor deleted from TempSensor.');
                 }
             } catch (err) {
@@ -235,17 +235,17 @@ router.post('/deleteSensor', async function(req, res, next) {
 //================================
 // Handle calls for Temp Setpoint
 //================================
-router.post('/crescTemp', async function(req, res, next) {
+router.post('/crescTemp', async function (req, res, next) {
     console.log('API Route: Received POST call to increase temperature setpoint');
 
     try {
         const room = req.body.room;
         const newSetpoint = req.body.newSetpoint;
-        const serverMQTT = require('../../serverMQTT');
-        
+        const serverMQTT = require('../../MQTT/serverMQTT');
+
         // Publish to MQTT and wait for confirmation
         const result = await serverMQTT.publishSetpointUpdate(room, newSetpoint);
-        
+
         console.log('API Route: Setpoint increased successfully:', result);
         res.json({ success: true, newSetpoint: newSetpoint });
     } catch (err) {
@@ -254,22 +254,36 @@ router.post('/crescTemp', async function(req, res, next) {
     }
 });
 
-router.post('/scadTemp', async function(req, res, next) {
+router.post('/scadTemp', async function (req, res, next) {
     console.log('API Route: Received POST call to decrease temperature setpoint');
 
     try {
         const room = req.body.room;
         const newSetpoint = req.body.newSetpoint;
-        const serverMQTT = require('../../serverMQTT');
-        
+        const serverMQTT = require('../../MQTT/serverMQTT');
+
         // Publish to MQTT and wait for confirmation
         const result = await serverMQTT.publishSetpointUpdate(room, newSetpoint);
-        
+
         console.log('Route: Setpoint decreased successfully:', result);
         res.json({ success: true, newSetpoint: newSetpoint });
     } catch (err) {
         console.error('Error decreasing temp setpoint:', err);
         res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+//================================
+// Handle calls for Room Status
+//================================
+router.get('/getRoomStatus', function (req, res, next) {
+    try {
+        const serverMQTT = require('../../MQTT/serverMQTT');
+        // Return the roomCache directly
+        res.json(serverMQTT.roomCache);
+    } catch (err) {
+        console.error('Error getting room status:', err);
+        res.status(500).json({ error: err.message });
     }
 });
 
